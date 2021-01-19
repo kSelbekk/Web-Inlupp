@@ -11,7 +11,7 @@ namespace Web_Inlupp.Controllers
         private readonly ApplicationDbContext _dbContext;
 
         // GET
-        public IActionResult ShopIndex()
+        public IActionResult ShopIndex2()
         {
             var viewModel = new CategoryIndexViewModel();
             viewModel.Categories = _dbContext.Categories
@@ -25,14 +25,20 @@ namespace Web_Inlupp.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Product()
+        public IActionResult ShopIndex()
         {
             var viewModel = new ProductIndexViewModel();
             viewModel.products = _dbContext.Products
                 .Select(dbProd => new ProductIndexViewModel.ProductViewModel()
                 {
+                    Id = dbProd.Id,
+                    Name = dbProd.ProductName,
+                    Category = dbProd.Category,
+                    Description = dbProd.Description,
+                    Price = dbProd.Price
                 }).ToList();
-            return View();
+
+            return View(viewModel);
         }
 
         public IActionResult Edit(int Id)

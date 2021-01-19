@@ -29,6 +29,32 @@ namespace Web_Inlupp.Data
                 });
             }
 
+            var akrapovic = dbContext.Products
+                .FirstOrDefault(p => p.ProductName == "Akrapovic");
+            if (akrapovic == null)
+            {
+                dbContext.Products.Add(new Product()
+                {
+                    ProductName = "Akrapovic",
+                    Description = "The best exhaust on the market",
+                    Category = dbContext.Categories.First(c => c.CategoryName == "Exhaust"),
+                    Price = 3500m
+                });
+            }
+
+            var bsr = dbContext.Products
+                .FirstOrDefault(p => p.ProductName == "Bsr tuning chip");
+            if (bsr == null)
+            {
+                dbContext.Products.Add(new Product()
+                {
+                    ProductName = "Bsr tuning chip",
+                    Description = "Adds 30hp to the car",
+                    Category = dbContext.Categories.First(c => c.CategoryName == "Electric"),
+                    Price = 3500m
+                });
+            }
+
             dbContext.SaveChanges();
         }
 

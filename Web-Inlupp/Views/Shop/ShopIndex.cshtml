@@ -1,4 +1,4 @@
-﻿@model Web_Inlupp.ViewModel.CategoryIndexViewModel
+﻿@model Web_Inlupp.ViewModel.ProductIndexViewModel
 @{
     ViewData["Title"] = "Shop";
 }
@@ -83,11 +83,11 @@
                     <div class="card border-0 shadow-sm mb-4 p-2">
                         <div class="card-body">
                             <h2 class="h5 mb-4">Choose category</h2>
-                            @foreach (var cat in Model.Categories)
+                            @foreach (var cat in Model.products)
                             {
                                 <div class="custom-control custom-checkbox mb-2">
                                     <input class="custom-control-input" id="customCheck1" type="checkbox">
-                                    <label class="custom-control-label" for="customCheck1">@cat.Name</label>
+                                    <label class="custom-control-label" for="customCheck1">@cat.Category.CategoryName</label>
                                 </div>
                             }
                         </div>
@@ -102,17 +102,12 @@
                     <div class="col-md-7">
                         <ul class="list-inline mb-0">
                             <li class="list-inline-item my-1 my-lg-0">
+                                <label>Sort</label>
+
                                 <select class="selectpicker" name="sort" data-style="btn btn-light shadow-xs bg-white border" data-title="Sort By" data-width="180">
                                     <option value="alphapitcally">Alphapitcally</option>
-                                    <option value="latest">Latest</option>
-                                    <option value="top-rated">Top rated</option>
-                                    <option value="random">Random</option>
-                                </select>
-                            </li>
-                            <li class="list-inline-item my-1 my-lg-0">
-                                <select class="selectpicker" name="type" data-style="btn btn-light shadow-xs bg-white border" data-width="180">
-                                    <option value="tools">Tools</option>
-                                    <option value="resources">Resources</option>
+                                    <option value="highest-price">Highest Price</option>
+                                    <option value="lowest-price">Lowest Price</option>
                                 </select>
                             </li>
                         </ul>
@@ -123,18 +118,21 @@
                 </div>
                 <!-- Listing items-->
                 <div class="row mb-4">
-                    <div class="col-lg-6 mb-4">
-                        <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
-                            <a class="d-block dark-overlay card-img-top overflow-hidden tool-trending" href="detail.html">
-                                <div class="tool-thumb rounded-circle" href="detail.html"><img class="img-fluid rounded-circle" src="img/tool-thumb-1.png" alt="..." width="40"></div>
-                                <div class="overlay-content"><img class="img-fluid" src="img/cat-tool-bg-1.jpg" alt="..."></div>
-                            </a>
-                            <div class="card-body p-4">
-                                <h3 class="h5"> <a class="stretched-link reset-anchor" href="detail.html">Curator</a></h3>
-                                <p class="text-muted text-small mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore</p>
+                    @foreach (var product in @Model.products)
+                    {
+                        <div class="col-lg-6 mb-4">
+                            <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
+                                <a class="d-block dark-overlay card-img-top overflow-hidden tool-trending" href="detail.html">
+                                    <div class="tool-thumb rounded-circle" href="detail.html"><img class="img-fluid rounded-circle" src="img/tool-thumb-1.png" alt="..." width="40"></div>
+                                    <div class="overlay-content"><img class="img-fluid" src="img/cat-tool-bg-1.jpg" alt="..."></div>
+                                </a>
+                                <div class="card-body p-4">
+                                    <h3 class="h5"> <a class="stretched-link reset-anchor" href="detail.html">@product.Name</a></h3>
+                                    <p class="text-muted text-small mb-0">@product.Description</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
                     <!-- Pagination-->
                     <nav aria-label="Page navigation example">
                         <ul class="pagination justify-content-end mb-0">
