@@ -11,6 +11,25 @@ namespace Web_Inlupp.Data
         {
             dbContext.Database.Migrate();
             SeedCategory(dbContext);
+            SeedProducts(dbContext);
+        }
+
+        private static void SeedProducts(ApplicationDbContext dbContext)
+        {
+            var piston = dbContext.Products
+                .FirstOrDefault(p => p.ProductName == "Piston");
+            if (piston == null)
+            {
+                dbContext.Products.Add(new Product()
+                {
+                    ProductName = "Piston",
+                    Description = "Perfect for cars with turbo",
+                    Category = dbContext.Categories.First(c => c.CategoryName == "Engine"),
+                    Price = 100m
+                });
+            }
+
+            dbContext.SaveChanges();
         }
 
         private static void SeedCategory(ApplicationDbContext dbContext)
@@ -46,8 +65,6 @@ namespace Web_Inlupp.Data
             }
 
             dbContext.SaveChanges();
-
         }
-
     }
 }
