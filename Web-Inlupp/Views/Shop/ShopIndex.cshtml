@@ -3,76 +3,6 @@
     ViewData["Title"] = "Shop";
 }
 
-<div class="modal fade" id="listingModal" tabindex="-1" role="dialog" aria-labelledby="listingModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header px-lg-5">
-                <h5 class="modal-title" id="listingModalLabel">Add Listing</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body px-lg-5">
-                <form action="#">
-                    <div class="row">
-                        <div class="form-group col-lg-6">
-                            <label for="fullName">Full name</label>
-                            <input class="form-control form-control-lg" id="fullName" type="text" name="fullname" placeholder="Your full name">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="email">Email Address</label>
-                            <input class="form-control form-control-lg" id="email" type="email" name="email" placeholder="Your email address">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="fullName">Listing Type</label>
-                            <select class="selectpicker" id="listingType" name="listing-type" data-style="bs-select-form-control" data-title="What do you want to add" data-width="100%" required>
-                                <option value="tool">Tool</option>
-                                <option value="resource">Resource</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="istingTitle">Listing title</label>
-                            <input class="form-control form-control-lg" id="istingTitle" type="text" name="listing-title" placeholder="Title of your title">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="listingUrl">Listing URL</label>
-                            <input class="form-control form-control-lg" id="listingUrl" type="text" name="listing-url" placeholder="Listing website url">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="listingCategory">Listing category</label>
-                            <select class="selectpicker" id="listingCategory" name="listing-category" data-style="bs-select-form-control" data-title="Select listing category" data-width="100%" required>
-                                <option value="">Idea generation</option>
-                                <option value="">Idea generation</option>
-                                <option value="">Design</option>
-                                <option value="">Naming</option>
-                                <option value="">Domain names</option>
-                                <option value="">Sales</option>
-                                <option value="">Finance</option>
-                                <option value="">Project management</option>
-                                <option value="">Hosting</option>
-                                <option value="">Social tools</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-lg-12">
-                            <label for="listingDescription">Listing description</label>
-                            <textarea class="form-control form-control-lg" id="listingDescription" name="listing-description" rows="5" placeholder="Add a small brief about your listing."></textarea>
-                        </div>
-                        <div class="form-group col-lg-6 mb-lg-0">
-                            <label for="listingThumb">Listing thumbnail</label>
-                            <input class="form-control form-control-lg-2" id="listingThumb" type="file" name="listing-thumb">
-                        </div>
-                        <div class="form-group col-lg-6 mb-lg-0">
-                            <label for="listingCover">Listing cover</label>
-                            <input class="form-control form-control-lg-2" id="listingCover" type="file" name="listing-cover">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer justify-content-start px-lg-5">
-                <button class="btn btn-primary" type="submit">Submit listing</button>
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 <section class="py-5">
     <div class="container py-5">
         <div class="row">
@@ -113,7 +43,7 @@
                         </ul>
                     </div>
                     <div class="col-md-5 text-md-right">
-                        <p class="h6 mb-0 p-3 p-md-0">Show 8 results</p>
+                        <p class="h6 mb-0 p-3 p-md-0">Showing @Model.products.Count results</p>
                     </div>
                 </div>
                 <!-- Listing items-->
@@ -123,11 +53,11 @@
                         <div class="col-lg-6 mb-4">
                             <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
                                 <a class="d-block dark-overlay card-img-top overflow-hidden tool-trending" href="detail.html">
-                                    <div class="tool-thumb rounded-circle" href="detail.html"><img class="img-fluid rounded-circle" src="img/tool-thumb-1.png" alt="..." width="40"></div>
-                                    <div class="overlay-content"><img class="img-fluid" src="img/cat-tool-bg-1.jpg" alt="..."></div>
+                                    <div class="tool-thumb rounded-circle" href="detail.html"><img class="img-fluid rounded-circle" src="" alt="..." width="40"></div>
+                                    <div class="overlay-content"><img class="img-fluid" src="" alt="..."></div>
                                 </a>
                                 <div class="card-body p-4">
-                                    <h3 class="h5"> <a class="stretched-link reset-anchor" href="detail.html">@product.Name</a></h3>
+                                    <h3 class="h5"> <a class="stretched-link reset-anchor" href="Kommer bli en asp-action sedan">@product.Name</a></h3>
                                     <p class="text-muted text-small mb-0">@product.Description</p>
                                 </div>
                             </div>
