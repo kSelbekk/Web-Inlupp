@@ -1,4 +1,5 @@
-﻿@model Web_Inlupp.ViewModel.ProductIndexViewModel
+﻿@using Microsoft.CodeAnalysis
+@model Web_Inlupp.ViewModel.ProductIndexViewModel
 @{
     ViewData["Title"] = "Shop";
 }
@@ -16,8 +17,8 @@
                             @foreach (var cat in Model.products)
                             {
                                 <div class="custom-control custom-checkbox mb-2">
-                                    <input class="custom-control-input" id="customCheck1" type="checkbox">
-                                    <label class="custom-control-label" for="customCheck1">@cat.Category.CategoryName</label>
+                                    <input type="checkbox" name="category">
+                                    <label>@cat.Category.CategoryName</label>
                                 </div>
                             }
                         </div>
@@ -35,6 +36,7 @@
                                 <label>Sort</label>
 
                                 <select class="selectpicker" name="sort" data-style="btn btn-light shadow-xs bg-white border" data-title="Sort By" data-width="180">
+                                    <option value=""></option>
                                     <option value="alphapitcally">Alphapitcally</option>
                                     <option value="highest-price">Highest Price</option>
                                     <option value="lowest-price">Lowest Price</option>
@@ -53,11 +55,10 @@
                         <div class="col-lg-6 mb-4">
                             <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
                                 <a class="d-block dark-overlay card-img-top overflow-hidden tool-trending" href="detail.html">
-                                    <div class="tool-thumb rounded-circle" href="detail.html"><img class="img-fluid rounded-circle" src="" alt="..." width="40"></div>
-                                    <div class="overlay-content"><img class="img-fluid" src="" alt="..."></div>
                                 </a>
                                 <div class="card-body p-4">
-                                    <h3 class="h5"> <a class="stretched-link reset-anchor" href="Kommer bli en asp-action sedan">@product.Name</a></h3>
+                                    <h3 class="h5"> <a class="stretched-link reset-anchor">@product.Name</a></h3>
+                                    <p class="h5"> <a class="stretched-link reset-anchor" asp-action="ProductDetails" asp-route-id="@product.Id">@product.Price.ToString("C")</a></p>
                                     <p class="text-muted text-small mb-0">@product.Description</p>
                                 </div>
                             </div>

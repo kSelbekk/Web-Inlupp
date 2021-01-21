@@ -1,0 +1,52 @@
+﻿@model Web_Inlupp.ViewModel.ProductDetailsViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+<section class="hero d-flex align-items-end py-5 bg-cover bg-center" style="background: url(img/tool-detail-bg.jpg)">
+    <div class="container index-forward py-5 py-lg-0">
+        <div class="row align-items-end">
+            <div class="col-lg-7 mb-4 mb-lg-0">
+                <div class="media align-items-center">
+                    <img class="rounded-circle" src="img/tool-detail-thumb.jpg" alt="" width="80">
+                    <div class="media-body ml-3">
+                        <h1 class="text-white">@Model.Name</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 text-lg-right">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item m-1"><a class="btn btn-primary" href="#"> <i class="fas fa-link mr-2"></i>Edit</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8 mb-5 mb-lg-0">
+                <!-- About-->
+                <div class="card border-0 shadow-sm mb-4 mb-lg-5 p-2 p-lg-0">
+                    <div class="card-body p-lg-5">
+                        <h2 class="h3 mb-4">About @Model.Name </h2>
+                        <p>@Model.Description</p>
+                        <h5>Price: @Model.Price.ToString("C")</h5>
+                    </div>
+                </div>
+                <!-- Gallery-->
+                <div class="card border-0 shadow-sm mb-4 mb-lg-5 p-2 p-lg-0">
+                    <div class="card-body p-lg-5">
+                        <h2 class="h3 mb-4">Gallery</h2>
+                        <div class="rounded overflow-hidden mb-3">
+                            <div class="owl-carousel tool-gallery-slider" data-slider-id="1"><a class="d-block" href="img/tool-gallery-1.jpg" data-lightbox="tool-gallery" title="Gallery item 1"><img class="img-fluid" src="img/tool-gallery-1.jpg" alt="..."></a><a class="d-block" href="img/tool-gallery-2.jpg" data-lightbox="tool-gallery" title="Gallery item 2"><img class="img-fluid" src="img/tool-gallery-2.jpg" alt="..."></a><a class="d-block" href="img/tool-gallery-3.jpg" data-lightbox="tool-gallery" title="Gallery item 3"><img class="img-fluid" src="img/tool-gallery-3.jpg" alt="..."></a><a class="d-block" href="img/tool-gallery-4.jpg" data-lightbox="tool-gallery" title="Gallery item 4"><img class="img-fluid" src="img/tool-gallery-4.jpg" alt="..."></a></div>
+                        </div>
+                        <div class="owl-thumbs row px-2" data-slider-id="1">
+                            <div class="owl-thumb-item col-3 px-2"><img class="w-100" src="" alt="..."></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

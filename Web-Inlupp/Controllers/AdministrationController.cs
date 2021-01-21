@@ -15,6 +15,16 @@ namespace Web_Inlupp.Controllers
             this.roleManager = roleManager;
         }
 
+        public IActionResult Edit(int Id)
+        {
+            return View();
+        }
+
+        public IActionResult New()
+        {
+            return View();
+        }
+
         [HttpGet]
         public IActionResult Create()
         {

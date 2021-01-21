@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Web_Inlupp.Data;
@@ -13,16 +14,7 @@ namespace Web_Inlupp.Controllers
         // GET
         public IActionResult ShopIndex2()
         {
-            var viewModel = new CategoryIndexViewModel();
-            viewModel.Categories = _dbContext.Categories
-                .Select(dbCat => new CategoryIndexViewModel.CategoryViewModel()
-                {
-                    Id = dbCat.Id,
-                    Name = dbCat.CategoryName,
-                    Description = dbCat.Description
-                }).ToList();
-
-            return View(viewModel);
+            return View();
         }
 
         public IActionResult ShopIndex()
@@ -41,14 +33,17 @@ namespace Web_Inlupp.Controllers
             return View(viewModel);
         }
 
-        public IActionResult Edit(int Id)
+        public IActionResult ProductDetails(int id)
         {
-            return View();
-        }
+            var viewModel = new ProductDetailsViewModel();
+            var dbProduct = _dbContext.Products.First(i => i.Id == id);
 
-        public IActionResult New()
-        {
-            return View();
+            viewModel.Id = dbProduct.Id;
+            viewModel.Name = dbProduct.ProductName;
+            viewModel.Price = dbProduct.Price;
+            viewModel.Description = dbProduct.Description;
+
+            return View(viewModel);
         }
 
         public ShopController(ApplicationDbContext dbContext)
