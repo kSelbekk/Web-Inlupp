@@ -12,15 +12,13 @@ namespace Web_Inlupp.Controllers
         private readonly ApplicationDbContext _dbContext;
 
         // GET
-        public IActionResult ShopIndex2()
-        {
-            return View();
-        }
 
-        public IActionResult ShopIndex()
+        public IActionResult ShopIndex(string q)
         {
             var viewModel = new ProductIndexViewModel();
             viewModel.products = _dbContext.Products
+                .Include(c => c.Category)
+                .Where(r => q == null || r.ProductName.Contains(q) || r.Category.CategoryName.Contains(q))
                 .Select(dbProd => new ProductIndexViewModel.ProductViewModel()
                 {
                     Id = dbProd.Id,

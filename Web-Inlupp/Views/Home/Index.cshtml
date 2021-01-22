@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Web_Inlupp.ViewModel.ProductIndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -7,12 +8,14 @@
         <div class="row">
             <div class="col-lg-7 mx-auto text-center">
                 <p class="h6 text-uppercase text-primary mb-3">Listings</p>
-                <h1 class="mb-5">The best not real website you will ever vist</h1>
-                <form class="p-2 rounded shadow-sm bg-white" action="#">
+                <h1 class="mb-5">The best not real website you will ever visit</h1>
+                <form class="p-2 rounded shadow-sm bg-white" method="get" asp-controller="Shop" asp-action="ShopIndex">
                     <div class="input-group">
-                        <input class="form-control border-0 mr-2" type="search" placeholder="Search...">
+                        <input class="form-control border-0 mr-2" asp-for="q" placeholder="Search...">
                         <div class="input-group-append rounded">
-                            <button class="btn btn-primary rounded" type="submit"><i class="fas fa-search">Sök</i></button>
+                            <button class="btn btn-primary rounded" asp-controller="Shop" asp-action="ShopIndex" type="submit">
+                                <i class="fas fa-search">Sök</i>
+                            </button>
                         </div>
                     </div>
                 </form>
