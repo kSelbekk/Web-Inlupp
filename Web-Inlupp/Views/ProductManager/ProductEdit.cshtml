@@ -1,12 +1,12 @@
 ﻿@model Web_Inlupp.ViewModel.ProductEditViewModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Product Edit";
 }
 <div class="card-body">
-    <form method="post" asp-controller="Administration" asp-action="ProductEdit">
+    <form method="post" asp-controller="ProductManager" asp-action="ProductEdit">
         <fieldset>
-            <legend>Edit</legend>
+            <h2>Edit</h2>
 
             <div class="form-group">
                 <label asp-for="Name">Name</label>
@@ -15,7 +15,10 @@
 
             <div class="form-group">
                 <label asp-for="Description">Description</label>
-                <input class="form-control" asp-for="Description">
+                <textarea rows="5" cols="30"
+                          class="form-control" asp-for="Description">
+                </textarea>
+                <span asp-validation-for="Description" class="field-validation-error"></span>
             </div>
 
             <div class="form-group">
@@ -28,9 +31,11 @@
             <div class="form-group">
                 <label asp-for="Price">Price</label>
                 <input class="form-control" asp-for="Price">
+                <span asp-validation-for="Price"></span>
             </div>
 
             <button class="btn btn-primary" type="submit">Save Changes</button>
+            <a class="btn btn-primary" asp-controller="Shop" asp-action="ShopIndex">Cancel</a>
         </fieldset>
     </form>
 </div>

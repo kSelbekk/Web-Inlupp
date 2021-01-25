@@ -5,7 +5,7 @@ using Web_Inlupp.Data;
 
 namespace Web_Inlupp.ViewModel
 {
-    public class ProductNewViewModel
+    public class ProductEditViewModel
     {
         public int Id { get; set; }
 

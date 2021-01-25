@@ -1,0 +1,56 @@
+﻿@model Web_Inlupp.ViewModel.EditRoleViewModel
+
+@{
+    ViewBag.Title = "Edit Role";
+}
+
+<div class="card-body">
+    <form method="post" asp-controller="Administration" asp-action="EditRole">
+        <fieldset>
+            <h2>Edit</h2>
+
+            <div class="form-group">
+                <label asp-for="Id">Id</label>
+                <input asp-for="Id" disabled class="form-control">
+            </div>
+
+            <div class="form-group row">
+                <label asp-for="RoleName"></label>
+                <div class="col-sm-10">
+                    <input asp-for="RoleName" class="form-control" />
+                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                </div>
+            </div>
+        </fieldset>
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a asp-action="ListRoles" class="btn btn-primary">Cancel</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>User in @Model.RoleName</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Users.Any())
+                {
+                    foreach (var users in Model.Users)
+                    {
+                        <h5 class="card-title">@users</h5>
+                    }
+                }
+                else
+                {
+                    <h5>No users found</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-action="EditUsersInRole" asp-controller="Administration" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width: auto">Add or Remove Users</a>
+            </div>
+        </div>
+    </form>
+</div>

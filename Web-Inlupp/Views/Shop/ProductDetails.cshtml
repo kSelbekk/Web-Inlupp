@@ -1,8 +1,10 @@
-﻿@model Web_Inlupp.ViewModel.ProductDetailsViewModel
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager;
+@model Web_Inlupp.ViewModel.ProductDetailsViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
-<section class="hero d-flex align-items-end py-5 bg-cover bg-center" style="background: url(img/tool-detail-bg.jpg)">
+<section class="hero d-flex align-items-end py-5 bg-cover bg-center" style="background: url(https://picsum.photos/seed/picsum/1000/1100)">
     <div class="container index-forward py-5 py-lg-0">
         <div class="row align-items-end">
             <div class="col-lg-7 mb-4 mb-lg-0">
@@ -14,9 +16,10 @@
                 </div>
             </div>
             <div class="col-lg-5 text-lg-right">
-                <ul class="list-inline mb-0">
-                    <li class="list-inline-item m-1"><a class="btn btn-primary" asp-controller="Administration" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="fas fa-link mr-2"></i>Edit</a></li>
-                </ul>
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Product Manager"))
+                {
+                    <a class="list-inline-item m-1"><a class="btn btn-primary" asp-controller="ProductManager" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Edit</a></a>
+                }
             </div>
         </div>
     </div>
@@ -38,12 +41,7 @@
                 <div class="card border-0 shadow-sm mb-4 mb-lg-5 p-2 p-lg-0">
                     <div class="card-body p-lg-5">
                         <h2 class="h3 mb-4">Gallery</h2>
-                        <div class="rounded overflow-hidden mb-3">
-                            <div class="owl-carousel tool-gallery-slider" data-slider-id="1"><a class="d-block" href="img/tool-gallery-1.jpg" data-lightbox="tool-gallery" title="Gallery item 1"><img class="img-fluid" src="img/tool-gallery-1.jpg" alt="..."></a><a class="d-block" href="img/tool-gallery-2.jpg" data-lightbox="tool-gallery" title="Gallery item 2"><img class="img-fluid" src="img/tool-gallery-2.jpg" alt="..."></a><a class="d-block" href="img/tool-gallery-3.jpg" data-lightbox="tool-gallery" title="Gallery item 3"><img class="img-fluid" src="img/tool-gallery-3.jpg" alt="..."></a><a class="d-block" href="img/tool-gallery-4.jpg" data-lightbox="tool-gallery" title="Gallery item 4"><img class="img-fluid" src="img/tool-gallery-4.jpg" alt="..."></a></div>
-                        </div>
-                        <div class="owl-thumbs row px-2" data-slider-id="1">
-                            <div class="owl-thumb-item col-3 px-2"><img class="w-100" src="" alt="..."></div>
-                        </div>
+                        <div class="owl-thumb-item col-3 px-2"><img src="https://picsum.photos/400" alt="Car part"></div>
                     </div>
                 </div>
             </div>
