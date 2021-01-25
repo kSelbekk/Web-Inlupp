@@ -23,7 +23,9 @@ namespace Web_Inlupp.Controllers
         public IActionResult ProductEdit(int id)
         {
             var viewModel = new ProductEditViewModel();
-            var dbProduct = _dbContext.Products.Include(c => c.Category).First(i => i.Id == id);
+            var dbProduct = _dbContext.Products
+                .Include(c => c.Category)
+                .First(i => i.Id == id);
 
             viewModel.Id = dbProduct.Id;
             viewModel.Name = dbProduct.ProductName;
@@ -67,11 +69,10 @@ namespace Web_Inlupp.Controllers
             return View(viewModel);
         }
 
-        public IActionResult New()
+        public IActionResult ProductNew()
         {
-            var viewModel = new ProductNewViewModel();
-
-            return View();
+            var viewModel = new ProductNewViewModel() { AllCategories = GetCategoriesListItems() };
+            return View(viewModel);
         }
     }
 }
