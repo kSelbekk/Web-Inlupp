@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -63,6 +64,7 @@ namespace Web_Inlupp.Controllers
                 dbProduct.Category = _dbContext.Categories.First(c => c.Id == viewModel.SelectCategoryId);
 
                 _dbContext.SaveChanges();
+                return RedirectToAction("ShopIndex", "Shop");
             }
 
             viewModel.AllCategories = GetCategoriesListItems();
@@ -71,8 +73,31 @@ namespace Web_Inlupp.Controllers
 
         public IActionResult ProductNew()
         {
-            var viewModel = new ProductNewViewModel() { AllCategories = GetCategoriesListItems() };
+            var viewModel = new ProductNewViewModel { AllCategories = GetCategoriesListItems() };
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult ProductNew(ProductNewViewModel viewModel)
+        {
+            if (_dbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Namnet upptaget");
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var dbProd = new Product();
+            _dbContext.Products.Add(dbProd);
+            dbProd.Category = _dbContext.Categories
+                .First(c => c.Id == viewModel.SelectCategoryId);
+            dbProd.ProductName = viewModel.Name;
+            dbProd.Description = viewModel.Description;
+            dbProd.Price = viewModel.Price;
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("ShopIndex", "Shop");
+        }
+
+        public IActionResult ProductDelete()
+        {
+            return View();
         }
     }
 }

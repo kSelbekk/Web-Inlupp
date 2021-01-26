@@ -1,4 +1,7 @@
 ﻿@using Microsoft.CodeAnalysis
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager;
+
 @model Web_Inlupp.ViewModel.ProductIndexViewModel
 @{
     ViewData["Title"] = "Shop";
@@ -9,8 +12,12 @@
         <div class="row">
             <!-- Filter-->
             <div class="col-lg-3 order-2 order-lg-1">
-                <a class="btn btn-dark btn-block" asp-controller="ProductManager" asp-action="ProductNew"> <i class="fas fa-search mr-2 small"></i>Creat new Product</a>
-
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Product Manager"))
+                {
+                    <a class="btn btn-dark btn-block"
+                       asp-controller="ProductManager"
+                       asp-action="ProductNew">Creat new Product</a>
+                }
                 <h2 class="h3 mb-4 pb-1">Filter</h2>
                 <form action="#">
                     <div class="card border-0 shadow-sm mb-4 p-2">

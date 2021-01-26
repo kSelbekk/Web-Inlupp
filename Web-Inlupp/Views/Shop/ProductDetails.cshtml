@@ -19,6 +19,7 @@
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Product Manager"))
                 {
                     <a class="list-inline-item m-1"><a class="btn btn-primary" asp-controller="ProductManager" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Edit</a></a>
+                    <a class="list-inline-item m-1"><a class="btn btn-danger" asp-controller="ProductManager" asp-action="ProductDelete" asp-route-Id="@Model.Id"> <i class="mr-2"></i>delete</a></a>
                 }
             </div>
         </div>

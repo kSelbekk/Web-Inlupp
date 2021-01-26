@@ -13,7 +13,9 @@ namespace Web_Inlupp.ViewModel
         [MaxLength(50)]
         public string Name { get; set; }
 
+        [Required]
         public List<SelectListItem> AllCategories { get; set; } = new List<SelectListItem>();
+
         public int SelectCategoryId { get; set; }
 
         [MaxLength(150)]
