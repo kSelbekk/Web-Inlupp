@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Web_Inlupp</title>
+    <title>@ViewData["Title"] - Webbis</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
@@ -18,7 +18,6 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 py-lg-2">
             <div class="container">
                 <a class="navbar-brand py-3 d-flex align-items-center"><span class="text-uppercase text-small font-weight-bold text-dark ml-2 mb-0">vehiculum</span></a>
-                <!-- <a class="nav-link text-dark" asp-controller="Administration" asp-action="ListRoles">Manage Roles</a>-->
 
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                 {
@@ -28,12 +27,25 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
+                        <li class="input-group-append rounded nav-item">
+                            <form class="p-2 rounded shadow-sm bg-white" method="get" asp-controller="Shop" asp-action="ShopIndex">
+                                <div class="input-group-append rounded">
+                                    <input class="form-control border-0 mr-2 bg-gray-200" type="text" name="q" placeholder="Search...">
+                                    <button class="btn btn-sm btn-primary rounded" asp-controller="Shop" asp-action="ShopIndex" type="submit">
+                                        <i class="fas fa-search">Sök</i>
+                                    </button>
+                                </div>
+                            </form>
+                        </li>
+
                         <li class="nav-item">
                             <!-- Navbar link--><a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+
                         <li class="nav-item">
                             <!-- Navbar link--><a class="nav-link text-dark" asp-controller="Shop" asp-action="ShopIndex">Shop</a>
                         </li>
+
                         <li class="nav-item ml-lg-2 py-2 py-lg-0">
                             <partial name="_LoginPartial" />
                         </li>
@@ -48,10 +60,6 @@
         </main>
     </div>
     <footer class="border-top footer text-muted" style="background: #111;">
-        <div class="container py-4">
-            <div class="row py-5">
-            </div>
-        </div>
         <div class="copyrights py-4" style="background: #0e0e0e">
             <div class="container">
                 <div class="row text-center">

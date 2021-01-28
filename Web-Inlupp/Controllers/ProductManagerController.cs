@@ -11,20 +11,17 @@ using Web_Inlupp.ViewModel;
 namespace Web_Inlupp.Controllers
 {
     [Authorize(Roles = "Admin, Product Manager")]
-    public class ProductManagerController : Controller
+    public class ProductManagerController : BaseController
     {
-        private readonly ApplicationDbContext _dbContext;
-
-        public ProductManagerController(ApplicationDbContext dbContext)
+        public ProductManagerController(ApplicationDbContext dbContext) : base(dbContext)
         {
-            _dbContext = dbContext;
         }
 
         // GET
         public IActionResult ProductEdit(int id)
         {
             var viewModel = new ProductEditViewModel();
-            var dbProduct = _dbContext.Products
+            var dbProduct = DbContext.Products
                 .Include(c => c.Category)
                 .First(i => i.Id == id);
 
@@ -41,7 +38,7 @@ namespace Web_Inlupp.Controllers
         private List<SelectListItem> GetCategoriesListItems()
         {
             var list = new List<SelectListItem>();
-            list.AddRange(_dbContext.Categories.Select(c => new SelectListItem
+            list.AddRange(DbContext.Categories.Select(c => new SelectListItem
             {
                 Text = c.CategoryName,
                 Value = c.Id.ToString()
@@ -54,16 +51,16 @@ namespace Web_Inlupp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dbProduct = _dbContext.Products
+                var dbProduct = DbContext.Products
                     .Include(c => c.Category)
                     .First(p => p.Id == id);
 
                 dbProduct.ProductName = viewModel.Name;
                 dbProduct.Description = viewModel.Description;
                 dbProduct.Price = viewModel.Price;
-                dbProduct.Category = _dbContext.Categories.First(c => c.Id == viewModel.SelectCategoryId);
+                dbProduct.Category = DbContext.Categories.First(c => c.Id == viewModel.SelectCategoryId);
 
-                _dbContext.SaveChanges();
+                DbContext.SaveChanges();
                 return RedirectToAction("ShopIndex", "Shop");
             }
 
@@ -80,24 +77,27 @@ namespace Web_Inlupp.Controllers
         [HttpPost]
         public IActionResult ProductNew(ProductNewViewModel viewModel)
         {
-            if (_dbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Namnet upptaget");
+            if (DbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Namnet upptaget");
             if (!ModelState.IsValid) return View(viewModel);
 
             var dbProd = new Product();
-            _dbContext.Products.Add(dbProd);
-            dbProd.Category = _dbContext.Categories
+            DbContext.Products.Add(dbProd);
+            dbProd.Category = DbContext.Categories
                 .First(c => c.Id == viewModel.SelectCategoryId);
             dbProd.ProductName = viewModel.Name;
             dbProd.Description = viewModel.Description;
             dbProd.Price = viewModel.Price;
-            _dbContext.SaveChanges();
+            DbContext.SaveChanges();
 
             return RedirectToAction("ShopIndex", "Shop");
         }
 
-        public IActionResult ProductDelete()
+        public IActionResult ProductDelete(int id)
         {
-            return View();
+            var dbProd = DbContext.Products.First(p => p.Id.Equals(id));
+            DbContext.Products.Remove(dbProd);
+            DbContext.SaveChanges();
+            return RedirectToAction("ShopIndex", "Shop");
         }
     }
 }

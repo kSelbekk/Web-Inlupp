@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SmartBreadcrumbs.Attributes;
 using Web_Inlupp.Models;
 
 namespace Web_Inlupp.Controllers

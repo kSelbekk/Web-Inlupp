@@ -9,7 +9,7 @@ namespace Web_Inlupp.ViewModel
         [MaxLength(50)]
         public string q { get; set; }
 
-        public List<ProductViewModel> products { get; set; } = new List<ProductViewModel>();
+        public List<ProductViewModel> Products { get; set; } = new List<ProductViewModel>();
 
         public class ProductViewModel
         {

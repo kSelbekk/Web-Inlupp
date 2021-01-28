@@ -1,10 +1,24 @@
 ﻿@using Microsoft.CodeAnalysis
 @using Microsoft.AspNetCore.Identity
+@using Web_Inlupp.Data
+@using Web_Inlupp.ViewModel
 @inject SignInManager<IdentityUser> SignInManager;
 
 @model Web_Inlupp.ViewModel.ProductIndexViewModel
 @{
     ViewData["Title"] = "Shop";
+    var categories = (List<CategoryIndexViewModel.CategoryViewModel>)ViewData["Categories"];
+    if (categories == null)
+    {
+        categories = new List<CategoryIndexViewModel.CategoryViewModel>();
+    }
+
+    string activeController = "";
+    if (ViewContext.RouteData.Values["Controller"] != null)
+    {
+        activeController = ViewContext.RouteData.Values["Controller"].ToString();
+    }
+
 }
 
 <section class="py-5">
@@ -18,23 +32,23 @@
                        asp-controller="ProductManager"
                        asp-action="ProductNew">Creat new Product</a>
                 }
-                <h2 class="h3 mb-4 pb-1">Filter</h2>
-                <form action="#">
-                    <div class="card border-0 shadow-sm mb-4 p-2">
-                        <div class="card-body">
-                            <h2 class="h5 mb-4">Choose category</h2>
-                            @foreach (var cat in Model.products)
-                            {
-                                <div class="custom-control custom-checkbox mb-2">
-                                    <input type="checkbox" name="category">
-                                    <label>@cat.Category.CategoryName</label>
-                                </div>
-                            }
+
+                <div class="card">
+                    <div class="card-header font-weight-bold">Filter</div>
+                    <div class="card-body">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>
+                            <div class="dropdown-menu">
+                                @foreach (var category in categories)
+                                {
+                                    <a class="dropdown-item" asp-action="SearchResult" asp-route-id="@category.Id">@category.Name</a>
+                                }
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary btn-block" type="submit"> <i class="fas fa-search mr-2 small"></i>Search</button>
-                </form>
+                </div>
             </div>
+
             <!-- Listing-->
             <div class="col-lg-9 mb-5 mb-lg-0 order-1 order-lg-2">
                 <!-- Listing sorting-->
@@ -54,16 +68,16 @@
                         </ul>
                     </div>
                     <div class="col-md-5 text-md-right">
-                        <p class="h6 mb-0 p-3 p-md-0">Showing @Model.products.Count results</p>
+                        <p class="h6 mb-0 p-3 p-md-0">Showing @Model.Products.Count results</p>
                     </div>
                 </div>
                 <!-- Listing items-->
                 <div class="row mb-4">
-                    @foreach (var product in @Model.products)
+                    @foreach (var product in @Model.Products)
                     {
                         <div class="col-lg-6 mb-4">
                             <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
-                                <a class="d-block dark-overlay card-img-top overflow-hidden tool-trending" href="detail.html">
+                                <a class="d-block dark-overlay card-img-top overflow-hidden" asp-action="ProductDetails">
                                 </a>
                                 <div class="card-body p-4">
                                     <h3 class="h5"> <a class="stretched-link reset-anchor">@product.Name</a></h3>

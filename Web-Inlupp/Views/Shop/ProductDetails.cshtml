@@ -18,8 +18,8 @@
             <div class="col-lg-5 text-lg-right">
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Product Manager"))
                 {
-                    <a class="list-inline-item m-1"><a class="btn btn-primary" asp-controller="ProductManager" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Edit</a></a>
-                    <a class="list-inline-item m-1"><a class="btn btn-danger" asp-controller="ProductManager" asp-action="ProductDelete" asp-route-Id="@Model.Id"> <i class="mr-2"></i>delete</a></a>
+                    <a class="btn btn-primary list-inline-item m-1" asp-controller="ProductManager" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Edit</a>
+                    <a class="btn btn-danger list-inline-item m-1" asp-controller="ProductManager" asp-action="ProductDelete" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Delete</a>
                 }
             </div>
         </div>
@@ -28,23 +28,23 @@
 
 <section class="py-5">
     <div class="container py-5">
-        <div class="row">
-            <div class="col-lg-8 mb-5 mb-lg-0">
-                <!-- About-->
-                <div class="card border-0 shadow-sm mb-4 mb-lg-5 p-2 p-lg-0">
-                    <div class="card-body p-lg-5">
-                        <h2 class="h3 mb-4">About @Model.Name </h2>
-                        <p>@Model.Description</p>
-                        <h5>Price: @Model.Price.ToString("C")</h5>
-                    </div>
-                </div>
-                <!-- Gallery-->
-                <div class="card border-0 shadow-sm mb-4 mb-lg-5 p-2 p-lg-0">
-                    <div class="card-body p-lg-5">
-                        <h2 class="h3 mb-4">Gallery</h2>
-                        <div class="owl-thumb-item col-3 px-2"><img src="https://picsum.photos/400" alt="Car part"></div>
-                    </div>
-                </div>
+
+        <div class="card-header text-center">
+            <h3 class="d-inline-block">Category: @Model.Category.CategoryName</h3>
+        </div>
+        <!-- About-->
+        <div class="card border-0">
+            <div class="card-body text-center">
+                <h2 class="h3 mb-4">About @Model.Name </h2>
+                <p>@Model.Description</p>
+                <h5>Price: @Model.Price.ToString("C")</h5>
+            </div>
+        </div>
+        <!-- Gallery-->
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-lg-5 float-left">
+                <h2 class="h3 mb-4">Gallery</h2>
+                <div class="owl-thumb-item col-3 px-2"><img src="https://picsum.photos/400" alt="Car part"></div>
             </div>
         </div>
     </div>
