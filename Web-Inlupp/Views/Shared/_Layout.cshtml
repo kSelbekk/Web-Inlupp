@@ -12,6 +12,7 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&amp;display=swap">
 </head>
 <body>
     <header class="header">
@@ -27,12 +28,12 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto">
-                        <li class="input-group-append rounded nav-item">
+                        <li class="input-group-append rounded nav-item input-group-sm mb-3">
                             <form class="p-2 rounded shadow-sm bg-white" method="get" asp-controller="Shop" asp-action="ShopIndex">
                                 <div class="input-group-append rounded">
                                     <input class="form-control border-0 mr-2 bg-gray-200" type="text" name="q" placeholder="Search...">
                                     <button class="btn btn-sm btn-primary rounded" asp-controller="Shop" asp-action="ShopIndex" type="submit">
-                                        <i class="fas fa-search">Sök</i>
+                                        <i class="fas fa-search">Search</i>
                                     </button>
                                 </div>
                             </form>
