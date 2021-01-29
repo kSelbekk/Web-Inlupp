@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
 using Web_Inlupp.Data;
@@ -14,32 +15,14 @@ namespace Web_Inlupp.Controllers
         {
         }
 
-        public IActionResult ShopIndex(string q)
+        public IActionResult ShopIndex(string q, int id, string order)
         {
             var viewModel = new ProductIndexViewModel();
 
-            viewModel.Products = DbContext.Products
-                .Include(c => c.Category)
-                .Where(r => q == null || r.ProductName.Contains(q) || r.Description.Contains(q))
-                .Select(dbProd => new ProductIndexViewModel.ProductViewModel
-                {
-                    Id = dbProd.Id,
-                    Name = dbProd.ProductName,
-                    Category = dbProd.Category,
-                    Description = dbProd.Description,
-                    Price = dbProd.Price
-                }).ToList();
-
-            return View(viewModel);
-        }
-
-        public IActionResult SearchResult(int id)
-        {
-            var viewModel = new ProductIndexViewModel
+            if (q == null && id <1)
             {
-                Products = DbContext.Products
-                    .Include(c => c.Category)
-                    .Where(r => r.Category.Id == id)
+                viewModel.Products = DbContext.Products
+                    .Include(c=>c.Category)
                     .Select(dbProd => new ProductIndexViewModel.ProductViewModel
                     {
                         Id = dbProd.Id,
@@ -47,11 +30,59 @@ namespace Web_Inlupp.Controllers
                         Category = dbProd.Category,
                         Description = dbProd.Description,
                         Price = dbProd.Price
-                    }).ToList()
+                    }).ToList();
+            }
+            else
+            {
+                viewModel.Products = DbContext.Products
+                    .Include(c => c.Category)
+                    .Where(r => r.ProductName.Contains(q) || r.Description.Contains(q) || r.Category.Id == id)
+                    .Select(dbProd => new ProductIndexViewModel.ProductViewModel
+                    {
+                        Id = dbProd.Id,
+                        Name = dbProd.ProductName,
+                        Category = dbProd.Category,
+                        Description = dbProd.Description,
+                        Price = dbProd.Price
+                    }).ToList();
+            }
+
+
+            viewModel.SortingList = new List<SelectListItem>
+            {
+                new SelectListItem() { Text = "alphapitcally", Value = "alphapitcally"},
+                new SelectListItem() { Text = "highestPrice", Value = "highestPrice"},
+                new SelectListItem() { Text = "lowestPrice", Value = "lowestPrice"},
             };
 
-            return View("ShopIndex", viewModel);
+            if (order == null) return View(viewModel);
+
+            foreach (var selectListItem in viewModel.SortingList)
+            {
+                if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
+                {
+                    viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
+                    return View(viewModel);
+                }
+
+                if (selectListItem.Value == "alphapitcally" && order == selectListItem.Value)
+                {
+
+                    viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
+                    return View(viewModel);
+                }
+                if (selectListItem.Value == "lowestPrice" && order == selectListItem.Value)
+                {
+
+                    viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
+                    return View(viewModel);
+                }
+            }
+
+            return View(viewModel);
         }
+
+        
 
         public IActionResult ProductDetails(int id)
         {

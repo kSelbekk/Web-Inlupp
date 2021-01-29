@@ -40,6 +40,8 @@
                 <h5>Price: @Model.Price.ToString("C")</h5>
             </div>
         </div>
+        <a class="btn btn-dark" asp-controller="ProductManager" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Add to Cart</a>
+
         <!-- Gallery-->
         <div class="card border-0 shadow-sm">
             <div class="card-body p-lg-5 float-left">

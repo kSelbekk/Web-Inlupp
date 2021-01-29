@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_Inlupp.Data;
 
 namespace Web_Inlupp.ViewModel
@@ -10,6 +11,10 @@ namespace Web_Inlupp.ViewModel
         public string q { get; set; }
 
         public List<ProductViewModel> Products { get; set; } = new List<ProductViewModel>();
+
+        public List<SelectListItem> SortingList { get; set; } = new List<SelectListItem>();
+        public int SelectSort { get; set; }
+
 
         public class ProductViewModel
         {

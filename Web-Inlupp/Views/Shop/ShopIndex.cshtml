@@ -41,7 +41,7 @@
                             <div class="dropdown-menu">
                                 @foreach (var category in categories)
                                 {
-                                    <a class="dropdown-item" asp-action="SearchResult" asp-route-id="@category.Id">@category.Name</a>
+                                    <a class="dropdown-item" asp-action="ShopIndex" asp-route-id="@category.Id">@category.Name</a>
                                 }
                             </div>
                         </div>
@@ -54,18 +54,15 @@
                 <!-- Listing sorting-->
                 <div class="row mb-4 align-items-center">
                     <div class="col-md-7">
-                        <ul class="list-inline mb-0">
-                            <li class="list-inline-item my-1 my-lg-0">
-                                <label>Sort</label>
-
-                                <select class="selectpicker" name="sort" data-style="btn btn-light shadow-xs bg-white border" data-title="Sort By" data-width="180">
-                                    <option value=""></option>
-                                    <option value="alphapitcally">Alphapitcally</option>
-                                    <option value="highest-price">Highest Price</option>
-                                    <option value="lowest-price">Lowest Price</option>
-                                </select>
-                            </li>
-                        </ul>
+                        <form asp-action="ShopIndex" method="get">
+                            <div class="form-group">
+                                <label asp-for="SelectSort">Sort</label>
+                                <select class="form-control"
+                                        asp-for="SelectSort"
+                                        asp-items="Model.SortingList" name="order"></select>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Sök</button>
+                        </form>
                     </div>
                     <div class="col-md-5 text-md-right">
                         <p class="h6 mb-0 p-3 p-md-0">Showing @Model.Products.Count results</p>

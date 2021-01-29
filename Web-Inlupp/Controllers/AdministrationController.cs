@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -53,6 +54,8 @@ namespace Web_Inlupp.Controllers
             if (!ModelState.IsValid) return View();
 
             var role = await _roleManager.FindByIdAsync(model.Id);
+
+            
 
             if (role == null)
             {

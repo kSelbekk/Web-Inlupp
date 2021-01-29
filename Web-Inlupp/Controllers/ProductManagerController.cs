@@ -78,7 +78,8 @@ namespace Web_Inlupp.Controllers
         public IActionResult ProductNew(ProductNewViewModel viewModel)
         {
             if (DbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Namnet upptaget");
-            if (!ModelState.IsValid) return View(viewModel);
+            if (!ModelState.IsValid) return RedirectToAction("ShopIndex", "Shop");
+
 
             var dbProd = new Product();
             DbContext.Products.Add(dbProd);
@@ -88,8 +89,8 @@ namespace Web_Inlupp.Controllers
             dbProd.Description = viewModel.Description;
             dbProd.Price = viewModel.Price;
             DbContext.SaveChanges();
+            return View(viewModel);
 
-            return RedirectToAction("ShopIndex", "Shop");
         }
 
         public IActionResult ProductDelete(int id)
