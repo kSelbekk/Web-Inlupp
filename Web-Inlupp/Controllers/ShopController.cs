@@ -19,47 +19,30 @@ namespace Web_Inlupp.Controllers
         {
             var viewModel = new ProductIndexViewModel();
 
-            if (q == null && id <1)
-            {
-                viewModel.Products = DbContext.Products
-                    .Include(c=>c.Category)
-                    .Select(dbProd => new ProductIndexViewModel.ProductViewModel
-                    {
-                        Id = dbProd.Id,
-                        Name = dbProd.ProductName,
-                        Category = dbProd.Category,
-                        Description = dbProd.Description,
-                        Price = dbProd.Price
-                    }).ToList();
-            }
-            else
-            {
-                viewModel.Products = DbContext.Products
-                    .Include(c => c.Category)
-                    .Where(r => r.ProductName.Contains(q) || r.Description.Contains(q) || r.Category.Id == id)
-                    .Select(dbProd => new ProductIndexViewModel.ProductViewModel
-                    {
-                        Id = dbProd.Id,
-                        Name = dbProd.ProductName,
-                        Category = dbProd.Category,
-                        Description = dbProd.Description,
-                        Price = dbProd.Price
-                    }).ToList();
-            }
-
+            viewModel.Products = DbContext.Products
+                .Include(c => c.Category)
+                .Where(r => q == null && id == 0 || r.ProductName.Contains(q) || r.Description.Contains(q) || r.Category.Id == id)
+                .Select(dbProd => new ProductIndexViewModel.ProductViewModel
+                {
+                    Id = dbProd.Id,
+                    Name = dbProd.ProductName,
+                    Category = dbProd.Category,
+                    Description = dbProd.Description,
+                    Price = dbProd.Price
+                }).ToList();
 
             viewModel.SortingList = new List<SelectListItem>
             {
-                new SelectListItem() { Text = "alphapitcally", Value = "alphapitcally"},
-                new SelectListItem() { Text = "highestPrice", Value = "highestPrice"},
-                new SelectListItem() { Text = "lowestPrice", Value = "lowestPrice"},
+                new SelectListItem() { Text = "Alphapitcally", Value = "alphapitcally"},
+                new SelectListItem() { Text = "Highest Price", Value = "highestPrice"},
+                new SelectListItem() { Text = "Lowest Price", Value = "lowestPrice"}
             };
 
             if (order == null) return View(viewModel);
 
             foreach (var selectListItem in viewModel.SortingList)
             {
-                if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
+                if (selectListItem.Value == "highestPrice" && order.Equals(selectListItem.Value))
                 {
                     viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
                     return View(viewModel);
@@ -67,22 +50,18 @@ namespace Web_Inlupp.Controllers
 
                 if (selectListItem.Value == "alphapitcally" && order == selectListItem.Value)
                 {
-
-                    viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
+                    viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
                     return View(viewModel);
                 }
                 if (selectListItem.Value == "lowestPrice" && order == selectListItem.Value)
                 {
-
-                    viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
+                    viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
                     return View(viewModel);
                 }
             }
 
             return View(viewModel);
         }
-
-        
 
         public IActionResult ProductDetails(int id)
         {

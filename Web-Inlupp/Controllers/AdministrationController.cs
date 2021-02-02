@@ -13,12 +13,13 @@ using Web_Inlupp.ViewModel;
 namespace Web_Inlupp.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdministrationController : Controller
+    public class AdministrationController : BaseController
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager,
+            ApplicationDbContext dbContext) : base(dbContext)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -54,8 +55,6 @@ namespace Web_Inlupp.Controllers
             if (!ModelState.IsValid) return View();
 
             var role = await _roleManager.FindByIdAsync(model.Id);
-
-            
 
             if (role == null)
             {

@@ -53,7 +53,7 @@
             <div class="col-lg-9 mb-5 mb-lg-0 order-1 order-lg-2">
                 <!-- Listing sorting-->
                 <div class="row mb-4 align-items-center">
-                    <div class="col-md-7">
+                    <div class="dropdown">
                         <form asp-action="ShopIndex" method="get">
                             <div class="form-group">
                                 <label asp-for="SelectSort">Sort</label>
@@ -74,8 +74,7 @@
                     {
                         <div class="col-lg-6 mb-4">
                             <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
-                                <a class="d-block dark-overlay card-img-top overflow-hidden" asp-action="ProductDetails">
-                                </a>
+                                <a class="d-block dark-overlay card-img-top overflow-hidden" asp-action="ProductDetails"></a>
                                 <div class="card-body p-4">
                                     <h3 class="h5"> <a class="stretched-link reset-anchor">@product.Name</a></h3>
                                     <p class="h5"> <a class="stretched-link reset-anchor" asp-action="ProductDetails" asp-route-id="@product.Id">@product.Price.ToString("C")</a></p>
@@ -84,14 +83,6 @@
                             </div>
                         </div>
                     }
-                    <!-- Pagination-->
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end mb-0">
-                            <li class="page-item mx-1"><a class="page-link rounded border-0 shadow-sm px-3" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                            <li class="page-item mx-1 active"><a class="page-link rounded border-0 shadow-sm px-3" href="#">1</a></li>
-                            <li class="page-item mx-1"><a class="page-link rounded border-0 shadow-sm px-3" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                        </ul>
-                    </nav>
                 </div>
             </div>
         </div>

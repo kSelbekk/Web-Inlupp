@@ -17,6 +17,45 @@ namespace Web_Inlupp.Data
             dbContext.Database.Migrate();
             SeedCategory(dbContext);
             SeedProducts(dbContext);
+            SeedRoles(dbContext);
+            SeedUser(userManager);
+        }
+
+        private static void SeedRoles(ApplicationDbContext dbContext)
+        {
+            var role = dbContext.Roles.FirstOrDefault(a => a.Name == "Admin");
+            if (role == null)
+            {
+                dbContext.Roles.Add(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
+            }
+            role = dbContext.Roles.FirstOrDefault(a => a.Name == "Product Manager");
+            if (role == null)
+            {
+                dbContext.Roles.Add(new IdentityRole { Name = "Product Manager", NormalizedName = "Product Manager".ToUpper() });
+            }
+
+            dbContext.SaveChanges();
+        }
+
+        private static void SeedUser(UserManager<IdentityUser> userManager)
+        {
+            AddRoleIfNotExists(userManager, "stefan.holmberg@systementor.se", "Hejsan123#", new[] { "Admin" });
+            AddRoleIfNotExists(userManager, "stefan.holmbergmanager@systementor.se", "Hejsan123#", new[] { "Product Manager" });
+        }
+
+        private static void AddRoleIfNotExists(UserManager<IdentityUser> userManager, string userName, string password, string[] role)
+        {
+            if (userManager.FindByEmailAsync(userName).Result != null)
+                return;
+            var identityUser = new IdentityUser
+            {
+                UserName = userName,
+                Email = userName,
+                EmailConfirmed = true
+            };
+            var result = userManager.CreateAsync(identityUser, password).Result;
+
+            var r = userManager.AddToRolesAsync(identityUser, role).Result;
         }
 
         private static void SeedProducts(ApplicationDbContext dbContext)
@@ -30,7 +69,20 @@ namespace Web_Inlupp.Data
                     ProductName = "Piston",
                     Description = "Perfect for cars with turbo",
                     Category = dbContext.Categories.First(c => c.CategoryName == "Engine"),
-                    Price = 100m
+                    Price = 10000m
+                });
+            }
+
+            var pistonRings = dbContext.Products
+                .FirstOrDefault(p => p.ProductName == "Piston rings");
+            if (pistonRings == null)
+            {
+                dbContext.Products.Add(new Product()
+                {
+                    ProductName = "Piston rings",
+                    Description = "For evert enging ever",
+                    Category = dbContext.Categories.First(c => c.CategoryName == "Engine"),
+                    Price = 10000m
                 });
             }
 
@@ -43,7 +95,20 @@ namespace Web_Inlupp.Data
                     ProductName = "Akrapovic",
                     Description = "The best exhaust on the market",
                     Category = dbContext.Categories.First(c => c.CategoryName == "Exhaust"),
-                    Price = 3500m
+                    Price = 35000m
+                });
+            }
+
+            var milltekSport = dbContext.Products
+                .FirstOrDefault(p => p.ProductName == "Milltek Sport");
+            if (milltekSport == null)
+            {
+                dbContext.Products.Add(new Product()
+                {
+                    ProductName = "Milltek Sport",
+                    Description = "The best exhaust on the market",
+                    Category = dbContext.Categories.First(c => c.CategoryName == "Exhaust"),
+                    Price = 38000m
                 });
             }
 
@@ -55,6 +120,19 @@ namespace Web_Inlupp.Data
                 {
                     ProductName = "Bsr tuning chip",
                     Description = "Adds 30hp to the car",
+                    Category = dbContext.Categories.First(c => c.CategoryName == "Electric"),
+                    Price = 14999m
+                });
+            }
+
+            var spark = dbContext.Products
+                .FirstOrDefault(p => p.ProductName == "Sparkplugs");
+            if (spark == null)
+            {
+                dbContext.Products.Add(new Product()
+                {
+                    ProductName = "Sparkplugs",
+                    Description = "For that perfect ignition timing",
                     Category = dbContext.Categories.First(c => c.CategoryName == "Electric"),
                     Price = 3500m
                 });
@@ -96,6 +174,13 @@ namespace Web_Inlupp.Data
             }
 
             dbContext.SaveChanges();
+        }
+
+        private void AddRoleIfNotExists(ApplicationDbContext context, string role)
+        {
+            if (context.Roles.Any(r => r.Name == role)) return;
+            context.Roles.Add(new IdentityRole { Name = role, NormalizedName = role });
+            context.SaveChanges();
         }
     }
 }
