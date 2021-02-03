@@ -98,5 +98,32 @@ namespace Web_Inlupp.Controllers
             DbContext.SaveChanges();
             return RedirectToAction("ShopIndex", "Shop");
         }
+
+        public IActionResult ListCategories()
+        {
+            var viewModel = new CategoryIndexViewModel
+            {
+                Categories = DbContext.Categories.Select(dbCat => new CategoryIndexViewModel.CategoryViewModel
+                {
+                    Id = dbCat.Id,
+                    Name = dbCat.CategoryName,
+                    Description = dbCat.Description
+                }).ToList()
+            };
+
+            return View(viewModel);
+        }
+
+        public IActionResult EditCategory(int id)
+        {
+            var viewModel = new EditCategoryViewModel();
+            var dbCat = DbContext.Categories.First(i => i.Id == id);
+
+            viewModel.Name = dbCat.CategoryName;
+            viewModel.Description = dbCat.Description;
+            viewModel.Id = dbCat.Id;
+
+            return View(viewModel);
+        }
     }
 }

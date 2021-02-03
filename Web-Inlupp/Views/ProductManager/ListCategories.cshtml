@@ -1,0 +1,36 @@
+﻿@model Web_Inlupp.ViewModel.CategoryIndexViewModel
+
+@{
+    ViewData["Titel"] = "Categories";
+}
+
+<div class="card shadow-sm border-0 reset-anchor d-block ">
+    <div class="card-header">Categories</div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            @foreach (var cat in @Model.Categories)
+            {
+                <tbody>
+                    <tr>
+                        <td>@cat.Name</td>
+                        <td>@cat.Description</td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="EditCategory" asp-route-id="@cat.Id">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+    <div class="card-footer">
+        <a class="btn btn-dark btn-block d-inline-block"
+           asp-controller="ProductManager"
+           asp-action="NewCategory">Creat new Category</a>
+    </div>
+</div>

@@ -214,5 +214,28 @@ namespace Web_Inlupp.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult EditUser(EditUserViewModel viewModel, string id)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var dbUser = DbContext.Users.First(i => i.Id == id);
+
+            dbUser.Id = viewModel.Id;
+            dbUser.UserName = viewModel.UserName;
+            dbUser.Email = viewModel.Email;
+
+            DbContext.SaveChanges();
+            return RedirectToAction("ListRoles");
+        }
+
+        public IActionResult DeleteUser(string id)
+        {
+            var dbUser = DbContext.Users.First(db => db.Id == id);
+            DbContext.Users.Remove(dbUser);
+            DbContext.SaveChanges();
+            return RedirectToAction("ListUser");
+        }
     }
 }
