@@ -1,0 +1,31 @@
+﻿@model Web_Inlupp.ViewModel.ListUserViewModel
+
+@{
+    ViewData["Titel"] = "Edit User";
+}
+
+<div class="card shadow-sm border-0 reset-anchor d-block ">
+    <div class="card-header">Users</div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            @foreach (var user in @Model.Users)
+            {
+                <tbody>
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="EditUser" asp-route-id="@user.Id">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+</div>

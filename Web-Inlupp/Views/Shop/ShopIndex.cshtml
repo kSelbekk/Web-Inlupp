@@ -24,7 +24,6 @@
 <section class="py-5">
     <div class="container py-5">
         <div class="row">
-            <!-- Filter-->
             <div class="col-lg-3 order-2 order-lg-1">
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Product Manager"))
                 {
@@ -32,13 +31,14 @@
                        asp-controller="ProductManager"
                        asp-action="ProductNew">Creat new Product</a>
                 }
-
+                <!-- Filter category-->
                 <div class="card">
                     <div class="card-header font-weight-bold">Filter</div>
                     <div class="card-body">
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>
                             <div class="dropdown-menu">
+                                <a class="dropdown-item" asp-action="ShopIndex" asp-route-id=@null>All</a>
                                 @foreach (var category in categories)
                                 {
                                     <a class="dropdown-item" asp-action="ShopIndex" asp-route-id="@category.Id">@category.Name</a>
@@ -49,7 +49,6 @@
                 </div>
             </div>
 
-            <!-- Listing-->
             <div class="col-lg-9 mb-5 mb-lg-0 order-1 order-lg-2">
                 <!-- Listing sorting-->
                 <div class="row mb-4 align-items-center">
@@ -69,20 +68,32 @@
                     </div>
                 </div>
                 <!-- Listing items-->
-                <div class="row mb-4">
-                    @foreach (var product in @Model.Products)
-                    {
-                        <div class="col-lg-6 mb-4">
-                            <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
-                                <a class="d-block dark-overlay card-img-top overflow-hidden" asp-action="ProductDetails"></a>
-                                <div class="card-body p-4">
-                                    <h3 class="h5"> <a class="stretched-link reset-anchor">@product.Name</a></h3>
-                                    <p class="h5"> <a class="stretched-link reset-anchor" asp-action="ProductDetails" asp-route-id="@product.Id">@product.Price.ToString("C")</a></p>
-                                    <p class="text-muted text-small mb-0">@product.Description</p>
-                                </div>
-                            </div>
-                        </div>
-                    }
+                <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
+                    <div class="card-header">Products</div>
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            @foreach (var product in @Model.Products)
+                            {
+                                <tbody>
+                                    <tr>
+                                        <td>@product.Name</td>
+                                        <td>@product.Category.CategoryName</td>
+                                        <td>@product.Price.ToString("C")</td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@product.Id">Info</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            }
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

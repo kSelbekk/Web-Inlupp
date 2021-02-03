@@ -188,5 +188,31 @@ namespace Web_Inlupp.Controllers
             var roles = _roleManager.Roles;
             return View(roles);
         }
+
+        public IActionResult ListUser()
+        {
+            var viewModel = new ListUserViewModel();
+            viewModel.Users = DbContext.Users
+                .Select(u => new ListUserViewModel.ListUser
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    UserName = u.UserName
+                }).ToList();
+
+            return View(viewModel);
+        }
+
+        public IActionResult EditUser(string id)
+        {
+            var viewModel = new EditUserViewModel();
+            var dpUser = DbContext.Users
+                .First(i => i.Id == id);
+
+            viewModel.UserName = dpUser.UserName;
+            viewModel.Email = dpUser.Email;
+
+            return View(viewModel);
+        }
     }
 }

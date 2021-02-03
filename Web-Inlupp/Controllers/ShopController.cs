@@ -42,7 +42,7 @@ namespace Web_Inlupp.Controllers
 
             foreach (var selectListItem in viewModel.SortingList)
             {
-                if (selectListItem.Value == "highestPrice" && order.Equals(selectListItem.Value))
+                if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
                 {
                     viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
                     return View(viewModel);
