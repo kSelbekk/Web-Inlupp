@@ -9,7 +9,7 @@ namespace Web_Inlupp.ViewModel
         [Required, MaxLength(50)]
         public string Name { get; set; }
 
-        [Required, MaxLength(50)]
+        [Required, MaxLength(150)]
         public string Description { get; set; }
     }
 }

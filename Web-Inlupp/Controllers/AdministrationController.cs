@@ -18,7 +18,6 @@ namespace Web_Inlupp.Controllers
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager,
             ApplicationDbContext dbContext) : base(dbContext)
@@ -244,6 +243,31 @@ namespace Web_Inlupp.Controllers
             DbContext.Users.Remove(dbUser);
             DbContext.SaveChanges();
             return RedirectToAction("ListUser");
+        }
+
+        public IActionResult NewUser()
+        {
+            var viewModel = new NewUserIndexViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult NewUser(NewUserIndexViewModel viewModel)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var dbUser = new IdentityUser();
+            DbContext.AddAsync(dbUser);
+
+            dbUser.UserName = viewModel.UserName;
+            dbUser.Email = viewModel.Email;
+            dbUser.EmailConfirmed = true;
+            dbUser.NormalizedEmail = viewModel.Email.ToUpper();
+            dbUser.PasswordHash = viewModel.Password;
+
+            DbContext.SaveChanges();
+
+            return RedirectToAction("ListRoles");
         }
     }
 }
