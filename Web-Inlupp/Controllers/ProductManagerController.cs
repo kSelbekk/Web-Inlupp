@@ -77,7 +77,7 @@ namespace Web_Inlupp.Controllers
         [HttpPost]
         public IActionResult ProductNew(ProductNewViewModel viewModel)
         {
-            if (DbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Namnet upptaget");
+            if (DbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Product already exist");
             if (!ModelState.IsValid) return RedirectToAction("ShopIndex", "Shop");
 
             var dbProd = new Product();
@@ -133,6 +133,28 @@ namespace Web_Inlupp.Controllers
 
             var dbCat = DbContext.Categories
                 .First(i => i.Id == id);
+            dbCat.CategoryName = viewModel.Name;
+            dbCat.Description = viewModel.Description;
+            DbContext.SaveChanges();
+
+            return RedirectToAction("ListCategories");
+        }
+
+        public IActionResult NewCategory()
+        {
+            var viewModel = new NewCategoryIndexViewModel();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult NewCategory(NewCategoryIndexViewModel viewModel)
+        {
+            if (DbContext.Categories.Any(c => c.CategoryName == viewModel.Name)) ModelState.AddModelError("Name", "Category already exist");
+
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var dbCat = new Category();
+            DbContext.Add(dbCat);
             dbCat.CategoryName = viewModel.Name;
             dbCat.Description = viewModel.Description;
             DbContext.SaveChanges();
