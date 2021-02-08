@@ -125,5 +125,19 @@ namespace Web_Inlupp.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        public IActionResult EditCategory(EditCategoryViewModel viewModel, int id)
+        {
+            if (!ModelState.IsValid) return View(viewModel);
+
+            var dbCat = DbContext.Categories
+                .First(i => i.Id == id);
+            dbCat.CategoryName = viewModel.Name;
+            dbCat.Description = viewModel.Description;
+            DbContext.SaveChanges();
+
+            return RedirectToAction("ListCategories");
+        }
     }
 }
