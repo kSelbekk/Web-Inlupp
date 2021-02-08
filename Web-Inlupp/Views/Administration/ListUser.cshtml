@@ -23,6 +23,11 @@
                         <td>
                             <a class="btn btn-primary" asp-action="EditUser" asp-route-id="@user.Id">Edit</a>
                         </td>
+                        <td>
+                            <form method="post">
+                                <button class="btn btn-danger list-inline-item m-1" asp-action="DeleteUser" asp-route-Id="@user.Id"> <i class="mr-2"></i>Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 </tbody>
             }

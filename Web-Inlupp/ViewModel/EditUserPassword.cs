@@ -1,19 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Web_Inlupp.ViewModel
 {
-    public class EditUserViewModel
+    public class EditUserPassword
     {
         public string Id { get; set; }
-
-        [MaxLength(80), Required]
-        public string UserName { get; set; }
-
-        [MaxLength(80), Required, EmailAddress]
-        public string Email { get; set; }
 
         [DataType(DataType.Password)]
         [Compare("PasswordChecked")]

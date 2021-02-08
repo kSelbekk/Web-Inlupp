@@ -15,13 +15,13 @@ namespace Web_Inlupp.Controllers
         {
         }
 
-        public IActionResult ShopIndex(string q, int id, string order)
+        public IActionResult ShopIndex(string q, int? id, string order)
         {
             var viewModel = new ProductIndexViewModel();
 
             viewModel.Products = DbContext.Products
                 .Include(c => c.Category)
-                .Where(r => q == null && id == 0 || r.ProductName.Contains(q) || r.Description.Contains(q) || r.Category.Id == id)
+                .Where(r => q == null && id == null || r.ProductName.Contains(q) || r.Description.Contains(q) || r.Category.Id == id)
                 .Select(dbProd => new ProductIndexViewModel.ProductViewModel
                 {
                     Id = dbProd.Id,

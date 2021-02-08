@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +18,7 @@ namespace Web_Inlupp.Controllers
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
         public AdministrationController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager,
             ApplicationDbContext dbContext) : base(dbContext)
@@ -153,35 +155,35 @@ namespace Web_Inlupp.Controllers
             return RedirectToAction("EditRole", new { Id = roleId });
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> Create(ProjectRoleViewModel role)
-        {
-            if (!ModelState.IsValid) return View();
+        //[HttpPost]
+        //public async Task<IActionResult> Create(ProjectRoleViewModel role)
+        //{
+        //    if (!ModelState.IsValid) return View();
 
-            IdentityRole identityRole = new IdentityRole
-            {
-                Name = role.RoleName
-            };
+        //    IdentityRole identityRole = new IdentityRole
+        //    {
+        //        Name = role.RoleName
+        //    };
 
-            IdentityResult result = await _roleManager.CreateAsync(identityRole);
+        //    IdentityResult result = await _roleManager.CreateAsync(identityRole);
 
-            if (result.Succeeded)
-            {
-                return RedirectToAction("ListRoles", "Administration");
-            }
+        //    if (result.Succeeded)
+        //    {
+        //        return RedirectToAction("ListRoles", "Administration");
+        //    }
 
-            foreach (IdentityError error in result.Errors)
-            {
-                ModelState.AddModelError("RoleName", error.Description);
-            }
+        //    foreach (IdentityError error in result.Errors)
+        //    {
+        //        ModelState.AddModelError("RoleName", error.Description);
+        //    }
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public IActionResult ListRoles()
         {
@@ -206,11 +208,11 @@ namespace Web_Inlupp.Controllers
         public IActionResult EditUser(string id)
         {
             var viewModel = new EditUserViewModel();
-            var dpUser = DbContext.Users
+            var dbUser = DbContext.Users
                 .First(i => i.Id == id);
 
-            viewModel.UserName = dpUser.UserName;
-            viewModel.Email = dpUser.Email;
+            viewModel.UserName = dbUser.UserName;
+            viewModel.Email = dbUser.Email;
 
             return View(viewModel);
         }
@@ -220,16 +222,22 @@ namespace Web_Inlupp.Controllers
         {
             if (!ModelState.IsValid) return View(viewModel);
 
-            var dbUser = DbContext.Users.First(i => i.Id == id);
+            var dbUser = DbContext.Users.FirstOrDefault(i => i.Id == id);
 
-            dbUser.Id = viewModel.Id;
             dbUser.UserName = viewModel.UserName;
             dbUser.Email = viewModel.Email;
 
+            var user = _userManager.ChangePasswordAsync(dbUser, viewModel.CurrentPassword, viewModel.Password).Result;
+            if (!user.Succeeded)
+            {
+                ModelState.AddModelError("CurrentPassword", "Something went wrong");
+                return View(viewModel);
+            }
             DbContext.SaveChanges();
             return RedirectToAction("ListRoles");
         }
 
+        [HttpPost]
         public IActionResult DeleteUser(string id)
         {
             var dbUser = DbContext.Users.First(db => db.Id == id);
