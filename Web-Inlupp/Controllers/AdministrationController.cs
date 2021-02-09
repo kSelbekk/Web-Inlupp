@@ -5,9 +5,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using Web_Inlupp.Data;
 using Web_Inlupp.ViewModel;
 
@@ -229,7 +231,7 @@ namespace Web_Inlupp.Controllers
             var user = _userManager.ChangePasswordAsync(dbUser, viewModel.CurrentPassword, viewModel.Password).Result;
             if (!user.Succeeded)
             {
-                ModelState.AddModelError("CurrentPassword", "Something went wrong");
+                ModelState.AddModelError("CurrentPassword", "Wrong password");
                 return View(viewModel);
             }
             DbContext.SaveChanges();
@@ -239,7 +241,16 @@ namespace Web_Inlupp.Controllers
         [HttpPost]
         public IActionResult DeleteUser(string id)
         {
+            var users = _userManager.GetUsersInRoleAsync("Admin").Result;
+
             var dbUser = DbContext.Users.First(db => db.Id == id);
+
+            if (_userManager.IsInRoleAsync(dbUser, "Admin").Result && users.Count < 2)
+            {
+                ViewBag.ErrorMessage = "Error! There can't be zero Admins";
+                return View("DeleteUserError");
+            }
+
             DbContext.Users.Remove(dbUser);
             DbContext.SaveChanges();
             return RedirectToAction("ListUser");
@@ -263,8 +274,9 @@ namespace Web_Inlupp.Controllers
             dbUser.Email = viewModel.Email;
             dbUser.EmailConfirmed = true;
             dbUser.NormalizedEmail = viewModel.Email.ToUpper();
-            dbUser.PasswordHash = viewModel.Password;
 
+            var hasher = new PasswordHasher<IdentityUser>();
+            dbUser.PasswordHash = hasher.HashPassword(dbUser, viewModel.Password);
             DbContext.SaveChanges();
 
             return RedirectToAction("ListRoles");

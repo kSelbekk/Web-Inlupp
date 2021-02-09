@@ -11,27 +11,26 @@
 
             <div class="form-group">
                 <label asp-for="UserName">Name</label>
-                <input class="form-control" asp-for="UserName">
+                <input class="form-control" asp-for="UserName" placeholder="Enter Username...">
                 <span asp-validation-for="UserName" class="field-validation-error"></span>
             </div>
-
             <div class="form-group">
                 <label asp-for="Email">Email</label>
-                <input class="form-control" asp-for="Email">
+                <input class="form-control" asp-for="Email" placeholder="Enter Email...">
                 <span asp-validation-for="Email" class="field-validation-error"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CurrentPassword">Password</label>
+                <label asp-for="CurrentPassword">Current Password</label>
                 <input class="form-control" asp-for="CurrentPassword" placeholder="Enter current Password...">
                 <span asp-validation-for="CurrentPassword" class="field-validation-error"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password">Password</label>
+                <label asp-for="Password">New Password</label>
                 <input class="form-control" asp-for="Password" placeholder="Enter new password...">
                 <span asp-validation-for="Password" class="field-validation-error"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PasswordChecked">Password</label>
+                <label asp-for="PasswordChecked">Enter new Password again</label>
                 <input class="form-control" asp-for="PasswordChecked" placeholder="Enter password again">
                 <span asp-validation-for="PasswordChecked" class="field-validation-error"></span>
             </div>

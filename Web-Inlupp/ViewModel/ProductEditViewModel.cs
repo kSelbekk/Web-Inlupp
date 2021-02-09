@@ -9,8 +9,7 @@ namespace Web_Inlupp.ViewModel
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(50)]
+        [MaxLength(50), Required]
         public string Name { get; set; }
 
         public List<SelectListItem> AllCategories { get; set; } = new List<SelectListItem>();
@@ -19,8 +18,7 @@ namespace Web_Inlupp.ViewModel
         [MaxLength(150)]
         public string Description { get; set; }
 
-        [Required]
-        [Range(1, 1000000)]
+        [Range(1, 1000000), Required]
         public decimal Price { get; set; }
     }
 }

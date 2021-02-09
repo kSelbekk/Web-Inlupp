@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web_Inlupp.ViewModel
 {
@@ -7,13 +8,13 @@ namespace Web_Inlupp.ViewModel
         [Required, MaxLength(50)]
         public string UserName { get; set; }
 
-        [Required, MaxLength(100)]
+        [Required, MaxLength(100), EmailAddress]
         public string Email { get; set; }
 
-        [Required, Compare("CheckPassword")]
+        [Required, PasswordPropertyText, Compare("CheckPassword")]
         public string Password { get; set; }
 
-        [Required]
+        [Required, PasswordPropertyText]
         public string CheckPassword { get; set; }
     }
 }
