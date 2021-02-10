@@ -1,9 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager;
 @model Web_Inlupp.ViewModel.ProductDetailsViewModel
-@{
-    ViewData["Title"] = "Product Details";
-}
+@{ ViewData["Title"] = "Product Details"; }
+
+
 <section class="hero d-flex align-items-end py-5 bg-cover bg-center" style="background: url(https://picsum.photos/seed/picsum/1000/1100)">
     <div class="container index-forward py-5 py-lg-0">
         <div class="row align-items-end">
@@ -22,9 +22,10 @@
 
                     <form method="post">
                         <button class="btn btn-danger list-inline-item m-1" asp-controller="ProductManager" asp-action="ProductDelete" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Delete</button>
-                    </form>}
+                    </form>
+                }
             </div>
-        </div>
+            </div>
     </div>
 </section>
 

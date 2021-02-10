@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -78,7 +79,7 @@ namespace Web_Inlupp.Controllers
         public IActionResult ProductNew(ProductNewViewModel viewModel)
         {
             if (DbContext.Products.Any(c => c.ProductName == viewModel.Name)) ModelState.AddModelError("Name", "Product already exist");
-            if (!ModelState.IsValid) return RedirectToAction("ShopIndex", "Shop");
+            if (!ModelState.IsValid) return RedirectToAction("Index", "Shop");
 
             var dbProd = new Product();
             DbContext.Products.Add(dbProd);
@@ -96,7 +97,7 @@ namespace Web_Inlupp.Controllers
             var dbProd = DbContext.Products.First(p => p.Id.Equals(id));
             DbContext.Products.Remove(dbProd);
             DbContext.SaveChanges();
-            return RedirectToAction("ShopIndex", "Shop");
+            return RedirectToAction("Index", "Shop");
         }
 
         public IActionResult ListCategories()

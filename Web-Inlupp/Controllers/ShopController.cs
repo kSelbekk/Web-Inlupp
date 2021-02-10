@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using DNTBreadCrumb.Core;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartBreadcrumbs.Attributes;
@@ -9,13 +13,14 @@ using Web_Inlupp.ViewModel;
 
 namespace Web_Inlupp.Controllers
 {
+    [BreadCrumb(Title="Shop", UseDefaultRouteUrl = true, Order = 1, IgnoreAjaxRequests = true)]
     public class ShopController : BaseController
     {
         public ShopController(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
 
-        public IActionResult ShopIndex(string q, int? id, string order)
+        public IActionResult Index(string q, int? id, string order)
         {
             var viewModel = new ProductIndexViewModel();
 
@@ -33,7 +38,9 @@ namespace Web_Inlupp.Controllers
 
             viewModel.SortingList = new List<SelectListItem>
             {
-                new SelectListItem() { Text = "Alphapitcally", Value = "alphapitcally"},
+                new SelectListItem() { Text = "", Value = null},
+                new SelectListItem() { Text = "A-Z", Value = "a-z"},
+                new SelectListItem() { Text = "Z-A", Value = "z-a"},
                 new SelectListItem() { Text = "Highest Price", Value = "highestPrice"},
                 new SelectListItem() { Text = "Lowest Price", Value = "lowestPrice"}
             };
@@ -42,15 +49,14 @@ namespace Web_Inlupp.Controllers
 
             foreach (var selectListItem in viewModel.SortingList)
             {
-                if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
-                {
-                    viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
-                    return View(viewModel);
-                }
-
-                if (selectListItem.Value == "alphapitcally" && order == selectListItem.Value)
+                if (selectListItem.Value == "a-z" && order == selectListItem.Value)
                 {
                     viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
+                    return View(viewModel);
+                }
+                if (selectListItem.Value == "z-a" && order == selectListItem.Value)
+                {
+                    viewModel.Products = viewModel.Products.OrderByDescending(p => p.Name).ToList();
                     return View(viewModel);
                 }
                 if (selectListItem.Value == "lowestPrice" && order == selectListItem.Value)
@@ -58,11 +64,16 @@ namespace Web_Inlupp.Controllers
                     viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
                     return View(viewModel);
                 }
+                if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
+                {
+                    viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
+                    return View(viewModel);
+                }
             }
 
             return View(viewModel);
         }
-
+        [BreadCrumb(Title = "> Products", Order = 2, IgnoreAjaxRequests = true)]
         public IActionResult ProductDetails(int id)
         {
             var viewModel = new ProductDetailsViewModel();

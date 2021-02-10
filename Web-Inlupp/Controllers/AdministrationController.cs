@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using DNTBreadCrumb.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal;
@@ -228,6 +229,11 @@ namespace Web_Inlupp.Controllers
             dbUser.UserName = viewModel.UserName;
             dbUser.Email = viewModel.Email;
 
+            if (viewModel.CurrentPassword == null || viewModel.Password == null || viewModel.PasswordChecked == null)
+            {
+                DbContext.SaveChanges();
+                return RedirectToAction("ListRoles");
+            }
             var user = _userManager.ChangePasswordAsync(dbUser, viewModel.CurrentPassword, viewModel.Password).Result;
             if (!user.Succeeded)
             {
