@@ -62,7 +62,7 @@ namespace Web_Inlupp.Controllers
                 dbProduct.Category = DbContext.Categories.First(c => c.Id == viewModel.SelectCategoryId);
 
                 DbContext.SaveChanges();
-                return RedirectToAction("ShopIndex", "Shop");
+                return RedirectToAction("Index", "Shop");
             }
 
             viewModel.AllCategories = GetCategoriesListItems();

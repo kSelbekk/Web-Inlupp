@@ -17,12 +17,13 @@ namespace Web_Inlupp.Controllers
     public class ShopController : BaseController
     {
         public ShopController(ApplicationDbContext dbContext) : base(dbContext)
-        {
-        }
+        { }
 
         public IActionResult Index(string q, int? id, string order)
         {
             var viewModel = new ProductIndexViewModel();
+
+            viewModel.SearchOption = q;
 
             viewModel.Products = DbContext.Products
                 .Include(c => c.Category)
@@ -36,15 +37,8 @@ namespace Web_Inlupp.Controllers
                     Price = dbProd.Price
                 }).ToList();
 
-            viewModel.SortingList = new List<SelectListItem>
-            {
-                new SelectListItem() { Text = "", Value = null},
-                new SelectListItem() { Text = "A-Z", Value = "a-z"},
-                new SelectListItem() { Text = "Z-A", Value = "z-a"},
-                new SelectListItem() { Text = "Highest Price", Value = "highestPrice"},
-                new SelectListItem() { Text = "Lowest Price", Value = "lowestPrice"}
-            };
-
+            viewModel.SortingList = GetSortingList();
+            
             if (order == null) return View(viewModel);
 
             foreach (var selectListItem in viewModel.SortingList)
@@ -73,6 +67,20 @@ namespace Web_Inlupp.Controllers
 
             return View(viewModel);
         }
+
+        private List<SelectListItem> GetSortingList()
+        {
+            var sortingList = new List<SelectListItem>
+            {
+                new SelectListItem() { Text = "", Value = null},
+                new SelectListItem() { Text = "A-Z", Value = "a-z"},
+                new SelectListItem() { Text = "Z-A", Value = "z-a"},
+                new SelectListItem() { Text = "Highest Price", Value = "highestPrice"},
+                new SelectListItem() { Text = "Lowest Price", Value = "lowestPrice"}
+            };
+            return sortingList;
+        }
+
         [BreadCrumb(Title = "> Products", Order = 2, IgnoreAjaxRequests = true)]
         public IActionResult ProductDetails(int id)
         {
