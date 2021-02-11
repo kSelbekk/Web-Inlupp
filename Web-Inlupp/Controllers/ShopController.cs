@@ -13,7 +13,7 @@ using Web_Inlupp.ViewModel;
 
 namespace Web_Inlupp.Controllers
 {
-    [BreadCrumb(Title="Shop", UseDefaultRouteUrl = true, Order = 1, IgnoreAjaxRequests = true)]
+    [BreadCrumb(Title = "Shop", UseDefaultRouteUrl = true, Order = 1, IgnoreAjaxRequests = true)]
     public class ShopController : BaseController
     {
         public ShopController(ApplicationDbContext dbContext) : base(dbContext)
@@ -23,6 +23,7 @@ namespace Web_Inlupp.Controllers
         {
             var viewModel = new ProductIndexViewModel();
 
+            //TODO: Fixa sök med sortering!!!!!
             viewModel.SearchOption = q;
 
             viewModel.Products = DbContext.Products
@@ -38,7 +39,7 @@ namespace Web_Inlupp.Controllers
                 }).ToList();
 
             viewModel.SortingList = GetSortingList();
-            
+
             if (order == null) return View(viewModel);
 
             foreach (var selectListItem in viewModel.SortingList)
@@ -72,7 +73,7 @@ namespace Web_Inlupp.Controllers
         {
             var sortingList = new List<SelectListItem>
             {
-                new SelectListItem() { Text = "", Value = null},
+                new SelectListItem() { Text = "Sorting", Value = null},
                 new SelectListItem() { Text = "A-Z", Value = "a-z"},
                 new SelectListItem() { Text = "Z-A", Value = "z-a"},
                 new SelectListItem() { Text = "Highest Price", Value = "highestPrice"},

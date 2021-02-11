@@ -1,0 +1,33 @@
+﻿@using Microsoft.CodeAnalysis
+@using Microsoft.AspNetCore.Identity
+@using Web_Inlupp.Data
+@using Web_Inlupp.ViewModel
+
+@{ ViewData["Title"] = "Shopping cart";
+
+}
+<div class="card shadow-sm border-0 reset-anchor d-block">
+    <div class="card-header">Cart</div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>Amount</td>
+                    <td>price</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="" asp-route-id="">Info</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -3,7 +3,6 @@
 @model Web_Inlupp.ViewModel.ProductDetailsViewModel
 @{ ViewData["Title"] = "Product Details"; }
 
-
 <section class="hero d-flex align-items-end py-5 bg-cover bg-center" style="background: url(https://picsum.photos/seed/picsum/1000/1100)">
     <div class="container index-forward py-5 py-lg-0">
         <div class="row align-items-end">
@@ -25,7 +24,7 @@
                     </form>
                 }
             </div>
-            </div>
+        </div>
     </div>
 </section>
 
@@ -43,7 +42,7 @@
                 <h5>Price: @Model.Price.ToString("C")</h5>
             </div>
         </div>
-        <a class="btn btn-dark" asp-controller="ProductManager" asp-action="ProductEdit" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Add to Cart</a>
+        <a class="btn btn-dark" asp-controller="ShoppingCart" asp-action="Index" asp-route-Id="@Model.Id"> <i class="mr-2"></i>Add to Cart</a>
 
         <!-- Gallery-->
         <div class="card border-0 shadow-sm">

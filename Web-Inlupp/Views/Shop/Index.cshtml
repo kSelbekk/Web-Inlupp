@@ -6,17 +6,17 @@
 
 @model Web_Inlupp.ViewModel.ProductIndexViewModel
 @{ ViewData["Title"] = "Shop";
-                var categories = (List<CategoryIndexViewModel.CategoryViewModel>)ViewData["Categories"];
-                if (categories == null)
-                {
-                    categories = new List<CategoryIndexViewModel.CategoryViewModel>();
-                }
+    var categories = (List<CategoryIndexViewModel.CategoryViewModel>)ViewData["Categories"];
+    if (categories == null)
+    {
+        categories = new List<CategoryIndexViewModel.CategoryViewModel>();
+    }
 
-                string activeController = "";
-                if (ViewContext.RouteData.Values["Controller"] != null)
-                {
-                    activeController = ViewContext.RouteData.Values["Controller"].ToString();
-                }
+    string activeController = "";
+    if (ViewContext.RouteData.Values["Controller"] != null)
+    {
+        activeController = ViewContext.RouteData.Values["Controller"].ToString();
+    }
 }
 <section class="py-5">
     <div class="container py-5">
@@ -45,8 +45,8 @@
                        asp-controller="ProductManager"
                        asp-action="ProductNew">Creat new Product</a>
                     <a class="btn btn-dark btn-block"
-                               asp-controller="ProductManager"
-                               asp-action="ListCategories">Creat/Edit Categories</a>
+                       asp-controller="ProductManager"
+                       asp-action="ListCategories">Creat/Edit Categories</a>
 
                 }
             </div>
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <!-- Listing items-->
-                <div class="card shadow-sm border-0 reset-anchor d-block hover-transition">
+                <div class="card shadow-sm border-0 reset-anchor d-block">
                     <div class="card-header">Products</div>
                     <div class="card-body">
                         <table class="table table-hover">
@@ -83,16 +83,17 @@
                             </thead>
                             @foreach (var product in @Model.Products)
                             {
-                <tbody>
-                    <tr>
-                        <td>@product.Name</td>
-                        <td>@product.Category.CategoryName</td>
-                        <td>@product.Price.ToString("C")</td>
-                        <td>
-                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@product.Id">Info</a>
-                        </td>
-                    </tr>
-                </tbody>}
+                                <tbody>
+                                    <tr>
+                                        <td>@product.Name</td>
+                                        <td>@product.Category.CategoryName</td>
+                                        <td>@product.Price.ToString("C")</td>
+                                        <td>
+                                            <a class="btn btn-primary" asp-action="ProductDetails" asp-route-id="@product.Id">Info</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+}
                         </table>
                     </div>
                 </div>

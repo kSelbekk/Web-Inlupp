@@ -14,5 +14,6 @@ namespace Web_Inlupp.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
 }
