@@ -19,16 +19,24 @@ namespace Web_Inlupp.Controllers
         public ShopController(ApplicationDbContext dbContext) : base(dbContext)
         { }
 
-        public IActionResult Index(string q, int? id, string order)
+        public IActionResult Index(string q, int? id, string order, ProductIndexViewModel viewModel)
         {
-            var viewModel = new ProductIndexViewModel();
-
             //TODO: Fixa sök med sortering!!!!!
-            viewModel.SearchOption = q;
+            string _searchFilter;
+            if (q == null)
+                _searchFilter = viewModel.SearchOption;
+            else
+                _searchFilter = q;
 
             viewModel.Products = DbContext.Products
                 .Include(c => c.Category)
-                .Where(r => q == null && id == null || r.ProductName.Contains(q) || r.Description.Contains(q) || r.Category.Id == id)
+
+                .Where(product => q == null && id == null ||
+                                  product.ProductName.Contains(q) ||
+                                  product.ProductName.Contains(_searchFilter) ||
+                                  product.Description.Contains(q) ||
+                                  product.Category.Id == id)
+
                 .Select(dbProd => new ProductIndexViewModel.ProductViewModel
                 {
                     Id = dbProd.Id,
@@ -42,31 +50,38 @@ namespace Web_Inlupp.Controllers
 
             if (order == null) return View(viewModel);
 
+            viewModel = Order(viewModel, order);
+
+            return View(viewModel);
+        }
+
+        public ProductIndexViewModel Order(ProductIndexViewModel viewModel, string order)
+        {
             foreach (var selectListItem in viewModel.SortingList)
             {
                 if (selectListItem.Value == "a-z" && order == selectListItem.Value)
                 {
                     viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
-                    return View(viewModel);
+                    return viewModel;
                 }
                 if (selectListItem.Value == "z-a" && order == selectListItem.Value)
                 {
                     viewModel.Products = viewModel.Products.OrderByDescending(p => p.Name).ToList();
-                    return View(viewModel);
+                    return viewModel;
                 }
                 if (selectListItem.Value == "lowestPrice" && order == selectListItem.Value)
                 {
                     viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
-                    return View(viewModel);
+                    return viewModel;
                 }
                 if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
                 {
                     viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
-                    return View(viewModel);
+                    return viewModel;
                 }
             }
 
-            return View(viewModel);
+            return null;
         }
 
         private List<SelectListItem> GetSortingList()

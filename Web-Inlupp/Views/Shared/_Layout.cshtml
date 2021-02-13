@@ -15,51 +15,51 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700&amp;display=swap">
 </head>
 <body>
-<header class="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 py-lg-2">
-        <div class="container">
-            <a class="navbar-brand py-3 d-flex align-items-center"><span class="text-uppercase text-small font-weight-bold text-dark ml-2 mb-0">vehiculum</span></a>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 py-lg-2">
+            <div class="container">
+                <a class="navbar-brand py-3 d-flex align-items-center"><span class="text-uppercase text-small font-weight-bold text-dark ml-2 mb-0">vehiculum</span></a>
 
-            @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-            {
-                <!-- Navbar link--><a class="nav-link text-dark" asp-controller="Administration" asp-action="ListRoles">Manage Users</a>
-            }
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    <!-- Navbar link--><a class="nav-link text-dark" asp-controller="Administration" asp-action="ListRoles">Manage Users</a>
+                }
 
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ml-auto">
-                    <li class="input-group-append rounded nav-item input-group-sm mb-3">
-                        <form class="p-2 rounded shadow-sm bg-white" method="get" asp-controller="Shop" asp-action="Index">
-                            <div class="input-group-append rounded">
-                                <input class="form-control border-0 mr-2 bg-gray-200" type="text" name="q" placeholder="Search...">
-                                <button class="btn btn-sm btn-primary rounded" asp-controller="Shop" asp-action="Index" type="submit">
-                                    <i class="fas fa-search">Search</i>
-                                </button>
-                            </div>
-                        </form>
-                    </li>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="input-group-append rounded nav-item input-group-sm mb-3">
+                            <form class="p-2 rounded shadow-sm bg-white" method="get">
+                                <div class="input-group-append rounded">
+                                    <input class="form-control border-0 mr-2 bg-gray-200" type="text" name="q" placeholder="Search...">
+                                    <button class="btn btn-sm btn-primary rounded" asp-controller="Shop" asp-action="Index" type="submit">
+                                        <i class="fas fa-search">Search</i>
+                                    </button>
+                                </div>
+                            </form>
+                        </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Shop" asp-action="Index">Shop</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Shop" asp-action="Index">Shop</a>
+                        </li>
 
-                    <li class="nav-item ml-lg-2 py-2 py-lg-0">
-                        <partial name="_LoginPartial" />
-                    </li>
-                </ul>
+                        <li class="nav-item ml-lg-2 py-2 py-lg-0">
+                            <partial name="_LoginPartial" />
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
+        </nav>
+    </header>
 
-<breadcrumb asp-homepage-title="Home > "
-            asp-homepage-url="@Url.Action("Index", "Home", values: new {area = ""})"
-            asp-bootstrap-version="V3"
-            asp-homepage-glyphicon="glyphicon glyphicon-home">
-</breadcrumb>
+    <breadcrumb asp-homepage-title="Home > "
+                asp-homepage-url="@Url.Action("Index", "Home", values: new {area = ""})"
+                asp-bootstrap-version="V3"
+                asp-homepage-glyphicon="glyphicon glyphicon-home">
+    </breadcrumb>
 
     <div class="container">
         <main role="main" class="pb-3">
