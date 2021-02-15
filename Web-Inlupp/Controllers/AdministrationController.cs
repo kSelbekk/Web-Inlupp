@@ -276,13 +276,11 @@ namespace Web_Inlupp.Controllers
         public IActionResult NewUser(NewUserIndexViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
-            foreach (var dbContextUser in DbContext.Users)
+
+            if (DbContext.Users.Any(dbUser => dbUser.Email == viewModel.Email))
             {
-                if (dbContextUser.Email == viewModel.Email)
-                {
-                    ModelState.AddModelError("Email", "User already exist");
-                    return View(viewModel);
-                }
+                ModelState.AddModelError("Email", "User already exist");
+                return View(viewModel);
             }
 
             var dbUser = new IdentityUser();

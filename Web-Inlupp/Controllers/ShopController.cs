@@ -30,10 +30,10 @@ namespace Web_Inlupp.Controllers
             viewModel.Products = DbContext.Products
                 .Include(c => c.Category)
 
-                .Where(product => q == null && id == null && viewModel.SearchOption == null ||
-                                  product.ProductName.Contains(q) && id == product.Category.Id ||
+                .Where(product => q == null && id == null ||
+                                  product.ProductName.Contains(q) ||
                                   product.ProductName.Contains(viewModel.SearchOption) ||
-                                  product.Description.Contains(q) && id == product.Category.Id ||
+                                  product.Description.Contains(q) ||
                                   product.Category.Id == id)
 
                 .Select(dbProd => new ProductIndexViewModel.ProductViewModel
