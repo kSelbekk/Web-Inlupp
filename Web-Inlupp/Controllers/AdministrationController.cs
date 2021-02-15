@@ -229,15 +229,17 @@ namespace Web_Inlupp.Controllers
             dbUser.UserName = viewModel.UserName;
             dbUser.Email = viewModel.Email;
 
-            if (viewModel.CurrentPassword == null || viewModel.Password == null || viewModel.PasswordChecked == null)
+            if (viewModel.Password == null)
             {
                 DbContext.SaveChanges();
                 return RedirectToAction("ListRoles");
             }
-            var user = _userManager.ChangePasswordAsync(dbUser, viewModel.CurrentPassword, viewModel.Password).Result;
+
+            var resetToken = _userManager.GeneratePasswordResetTokenAsync(dbUser).Result;
+            var user = _userManager.ResetPasswordAsync(dbUser, resetToken, viewModel.Password).Result;
             if (!user.Succeeded)
             {
-                ModelState.AddModelError("CurrentPassword", "Wrong password");
+                ModelState.AddModelError("Password", "You need a better password");
                 return View(viewModel);
             }
             DbContext.SaveChanges();
@@ -247,6 +249,8 @@ namespace Web_Inlupp.Controllers
         [HttpPost]
         public IActionResult DeleteUser(string id)
         {
+            if (!ModelState.IsValid) return RedirectToAction("ListUser");
+
             var users = _userManager.GetUsersInRoleAsync("Admin").Result;
 
             var dbUser = DbContext.Users.First(db => db.Id == id);
@@ -272,6 +276,14 @@ namespace Web_Inlupp.Controllers
         public IActionResult NewUser(NewUserIndexViewModel viewModel)
         {
             if (!ModelState.IsValid) return View(viewModel);
+            foreach (var dbContextUser in DbContext.Users)
+            {
+                if (dbContextUser.Email == viewModel.Email)
+                {
+                    ModelState.AddModelError("Email", "User already exist");
+                    return View(viewModel);
+                }
+            }
 
             var dbUser = new IdentityUser();
             DbContext.AddAsync(dbUser);

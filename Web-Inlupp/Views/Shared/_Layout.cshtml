@@ -22,7 +22,7 @@
 
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                 {
-                    <!-- Navbar link--><a class="nav-link text-dark" asp-controller="Administration" asp-action="ListRoles">Manage Users</a>
+                    <a class="nav-link text-dark" asp-controller="Administration" asp-action="ListRoles">Manage Users</a>
                 }
 
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -76,9 +76,7 @@
                     <div class="col-md-6 col-sm-6 text-md-right">
                         <p class="mb-0 text-muted mb-0 text-small">
                             copy; 2021 - Web_Inlupp - Template designed by <a class="reset-anchor text-primary" target="_blank" href="https://bootstraptemple.com/p/listings">Bootstrap Temple</a>
-                            .
                         </p>
-                        <!-- If you want to remove the backlink, please purchase the Attribution-Free License.-->
                     </div>
                 </div>
             </div>

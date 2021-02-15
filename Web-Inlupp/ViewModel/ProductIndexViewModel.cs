@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_Inlupp.Data;
 
@@ -16,7 +17,6 @@ namespace Web_Inlupp.ViewModel
         public int SelectSort { get; set; }
         public string SearchOption { get; set; }
 
-
         public class ProductViewModel
         {
             public int Id { get; set; }
@@ -24,7 +24,6 @@ namespace Web_Inlupp.ViewModel
             public Category Category { get; set; }
             public string Description { get; set; }
             public decimal Price { get; set; }
-
         }
     }
 }

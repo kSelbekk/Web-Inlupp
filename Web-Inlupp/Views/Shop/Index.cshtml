@@ -26,16 +26,18 @@
                 <div class="card">
                     <div class="card-header font-weight-bold">Filter</div>
                     <div class="card-body">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-route-id=@null>All</a>
-                                @foreach (var category in categories)
-                                {
-                                    <a class="dropdown-item" asp-route-id="@category.Id">@category.Name</a>
-                                }
+                        <form method="get" asp-action="Index">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-route-id=@null>All</a>
+                                    @foreach (var category in categories)
+                                    {
+                                        <button type="submit" class="dropdown-item" asp-route-id="@category.Id">@category.Name</button>
+                                    }
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
                 @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin") || User.IsInRole("Product Manager"))
@@ -51,9 +53,10 @@
 
             <div class="col-lg-9 mb-5 mb-lg-0 order-1 order-lg-2">
                 <!-- Listing sorting-->
+
                 <div class="row mb-4 align-items-center">
-                    <div class="dropdown">
-                        <form asp-action="Index" method="get">
+                    <form method="get" asp-action="Index">
+                        <div class="dropdown">
                             <div class="form-group">
                                 <label asp-for="SelectSort">Sort</label>
                                 <select class="form-control" onchange="this.form.submit()"
@@ -61,8 +64,14 @@
                                         asp-items="Model.SortingList" name="order">
                                 </select>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+
+                    <form asp-action="Index" method="get">
+                        <input class="ml-3" asp-for="q" placeholder="Search...">
+                        <button class="btn btn-sm btn-primary rounded" type="submit">Search</button>
+                    </form>
+
                     <div class="col-md-5 text-md-right">
                         <p class="h6 mb-0 p-3 p-md-0">Showing @Model.Products.Count results</p>
                     </div>

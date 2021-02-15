@@ -20,9 +20,6 @@ namespace Web_Inlupp.ViewModel
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        public string CurrentPassword { get; set; }
-
-        [DataType(DataType.Password)]
         public string PasswordChecked { get; set; }
     }
 }

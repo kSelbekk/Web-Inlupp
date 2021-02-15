@@ -18,13 +18,12 @@
                     {
                     <p>Hello @username </p>
                 }
-                    </p>
                     <h1 class="mb-5">UI Design is not one of my strong sides...</h1>
                     <form class="p-2 rounded shadow-sm bg-white" method="get">
                         <div class="input-group">
                             <input class="form-control border-0 mr-2" asp-for="q" placeholder="Search...">
                             <div class="input-group-append rounded">
-                                <button class="btn btn-primary rounded" asp-controller="Shop" asp-action="Index" type="submit">
+                                <button class="btn btn-primary rounded" asp-controller="Shop" asp-action="Index" asp-route-q="q" type="submit">
                                     <i class="fas fa-search">Search</i>
                                 </button>
                             </div>

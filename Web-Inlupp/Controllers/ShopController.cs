@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SmartBreadcrumbs.Attributes;
 using Web_Inlupp.Data;
 using Web_Inlupp.ViewModel;
 
@@ -22,19 +21,19 @@ namespace Web_Inlupp.Controllers
         public IActionResult Index(string q, int? id, string order, ProductIndexViewModel viewModel)
         {
             //TODO: Fixa sök med sortering!!!!!
-            string _searchFilter;
-            if (q == null)
-                _searchFilter = viewModel.SearchOption;
-            else
-                _searchFilter = q;
+
+            if (q != null)
+            {
+                viewModel.SearchOption = q;
+            }
 
             viewModel.Products = DbContext.Products
                 .Include(c => c.Category)
 
-                .Where(product => q == null && id == null ||
-                                  product.ProductName.Contains(q) ||
-                                  product.ProductName.Contains(_searchFilter) ||
-                                  product.Description.Contains(q) ||
+                .Where(product => q == null && id == null && viewModel.SearchOption == null ||
+                                  product.ProductName.Contains(q) && id == product.Category.Id ||
+                                  product.ProductName.Contains(viewModel.SearchOption) ||
+                                  product.Description.Contains(q) && id == product.Category.Id ||
                                   product.Category.Id == id)
 
                 .Select(dbProd => new ProductIndexViewModel.ProductViewModel
