@@ -6,7 +6,7 @@ namespace Web_Inlupp.Data
     {
         public int Id { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(50), Required]
         public string CategoryName { get; set; }
 
         [MaxLength(150)]

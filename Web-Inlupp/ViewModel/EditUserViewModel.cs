@@ -9,17 +9,17 @@ namespace Web_Inlupp.ViewModel
     {
         public string Id { get; set; }
 
-        [MaxLength(80), Required]
+        [MaxLength(100), Required]
         public string UserName { get; set; }
 
-        [MaxLength(80), Required, EmailAddress]
+        [MaxLength(100), Required, EmailAddress]
         public string Email { get; set; }
 
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password), Required]
         [Compare("PasswordChecked")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
+        [DataType(DataType.Password), Required]
         public string PasswordChecked { get; set; }
     }
 }

@@ -5,7 +5,7 @@ namespace Web_Inlupp.ViewModel
 {
     public class NewUserIndexViewModel
     {
-        [Required, MaxLength(50)]
+        [Required, MaxLength(100)]
         public string UserName { get; set; }
 
         [Required, MaxLength(100), EmailAddress]
