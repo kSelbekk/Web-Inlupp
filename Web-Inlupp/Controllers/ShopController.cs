@@ -70,7 +70,7 @@ namespace Web_Inlupp.Controllers
                 }
             }
 
-            return null;
+            return viewModel;
         }
 
         private List<SelectListItem> GetSortingList()
