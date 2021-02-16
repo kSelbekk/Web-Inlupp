@@ -225,7 +225,10 @@ namespace Web_Inlupp.Controllers
             if (!ModelState.IsValid) return View(viewModel);
 
             var dbUser = DbContext.Users.FirstOrDefault(i => i.Id == id);
-
+            if (dbUser == null)
+            {
+                return RedirectToAction("ListUser");
+            }
             dbUser.UserName = viewModel.UserName;
             dbUser.Email = viewModel.Email;
 
