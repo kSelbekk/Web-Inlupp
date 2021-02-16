@@ -11,10 +11,12 @@ namespace Web_Inlupp.ViewModel
         [Required, MaxLength(100), EmailAddress]
         public string Email { get; set; }
 
-        [Required, PasswordPropertyText, Compare("CheckPassword")]
+        [Required, DataType(DataType.Password), Compare("CheckPassword")]
+        [RegularExpression("^((?=.*[a-z])(?=.*[A-Z])(?=.*\\d)).+$", ErrorMessage = "You need a better password!")]
         public string Password { get; set; }
 
-        [Required, PasswordPropertyText]
+        [RegularExpression("^((?=.*[a-z])(?=.*[A-Z])(?=.*\\d)).+$")]
+        [Required, DataType(DataType.Password)]
         public string CheckPassword { get; set; }
     }
 }

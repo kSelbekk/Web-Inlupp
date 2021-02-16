@@ -15,7 +15,6 @@ namespace Web_Inlupp.ViewModel
 
         public List<SelectListItem> SortingList { get; set; } = new List<SelectListItem>();
         public int SelectSort { get; set; }
-        public string SearchOption { get; set; }
 
         public class ProductViewModel
         {

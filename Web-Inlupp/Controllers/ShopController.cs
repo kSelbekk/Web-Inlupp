@@ -20,19 +20,11 @@ namespace Web_Inlupp.Controllers
 
         public IActionResult Index(string q, int? id, string order, ProductIndexViewModel viewModel)
         {
-            //TODO: Fixa sök med sortering!!!!!
-
-            if (q != null)
-            {
-                viewModel.SearchOption = q;
-            }
-
             viewModel.Products = DbContext.Products
                 .Include(c => c.Category)
 
                 .Where(product => q == null && id == null ||
                                   product.ProductName.Contains(q) ||
-                                  product.ProductName.Contains(viewModel.SearchOption) ||
                                   product.Description.Contains(q) ||
                                   product.Category.Id == id)
 
@@ -58,25 +50,23 @@ namespace Web_Inlupp.Controllers
         {
             foreach (var selectListItem in viewModel.SortingList)
             {
-                if (selectListItem.Value == "a-z" && order == selectListItem.Value)
+                switch (selectListItem.Value)
                 {
-                    viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
-                    return viewModel;
-                }
-                if (selectListItem.Value == "z-a" && order == selectListItem.Value)
-                {
-                    viewModel.Products = viewModel.Products.OrderByDescending(p => p.Name).ToList();
-                    return viewModel;
-                }
-                if (selectListItem.Value == "lowestPrice" && order == selectListItem.Value)
-                {
-                    viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
-                    return viewModel;
-                }
-                if (selectListItem.Value == "highestPrice" && order == selectListItem.Value)
-                {
-                    viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
-                    return viewModel;
+                    case "a-z" when order == selectListItem.Value:
+                        viewModel.Products = viewModel.Products.OrderBy(p => p.Name).ToList();
+                        return viewModel;
+
+                    case "z-a" when order == selectListItem.Value:
+                        viewModel.Products = viewModel.Products.OrderByDescending(p => p.Name).ToList();
+                        return viewModel;
+
+                    case "lowestPrice" when order == selectListItem.Value:
+                        viewModel.Products = viewModel.Products.OrderBy(p => p.Price).ToList();
+                        return viewModel;
+
+                    case "highestPrice" when order == selectListItem.Value:
+                        viewModel.Products = viewModel.Products.OrderByDescending(p => p.Price).ToList();
+                        return viewModel;
                 }
             }
 
@@ -87,7 +77,6 @@ namespace Web_Inlupp.Controllers
         {
             var sortingList = new List<SelectListItem>
             {
-                new SelectListItem() { Text = "Sorting", Value = null},
                 new SelectListItem() { Text = "A-Z", Value = "a-z"},
                 new SelectListItem() { Text = "Z-A", Value = "z-a"},
                 new SelectListItem() { Text = "Highest Price", Value = "highestPrice"},

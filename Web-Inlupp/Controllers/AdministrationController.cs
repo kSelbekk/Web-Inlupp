@@ -293,6 +293,7 @@ namespace Web_Inlupp.Controllers
 
             var hasher = new PasswordHasher<IdentityUser>();
             dbUser.PasswordHash = hasher.HashPassword(dbUser, viewModel.Password);
+
             DbContext.SaveChanges();
 
             return RedirectToAction("ListRoles");
